@@ -74,6 +74,7 @@ public class Apollo {
 
     // TEST
     @EventSubscriber public void onKeyDown (KeyPressedEvent event) {
-        if (event.getKeyCode() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(new ModulesGui());
-    }
+        if (event.getKeyCode() == Keyboard.KEY_RSHIFT && Minecraft.getMinecraft().thePlayer != null){
+            Minecraft.getMinecraft().displayGuiScreen(new ModulesGui());
+    }}
 }
