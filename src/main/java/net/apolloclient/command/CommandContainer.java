@@ -37,9 +37,7 @@ import java.lang.reflect.Method;
  * </ul>
  *
  * <p>To invoke a {@link CommandContainer} use an instance of the objects {@link #invoke(Object...)} method
- * with a string parameter.</p><p></p>
- *
- * <hr><pre><b>commands</b>.get(<b>NAME</b>).invoke(<b>args[2]</b>);                          </pre><hr>
+ * single with a string parameter.</p>
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

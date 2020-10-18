@@ -24,7 +24,6 @@ import net.apolloclient.event.bus.SubscribeEvent;
 import net.apolloclient.event.impl.player.PlayerChatEvent;
 import net.apolloclient.module.bus.Module;
 import net.apolloclient.module.bus.event.InitializationEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -36,21 +35,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Implementation of @{@link Command}. Generates a list of {@link CommandContainer}s
  * used to sort and invoke all command messages. Any instance of this class must be registered
  * in the {@link EventBus} to receive {@link PlayerChatEvent}s and invoke needed methods from
- * the {@link #commands} CopyOnWriteArrayList. <p></p>
+ * the {@link #commands} CopyOnWriteArrayList.<p></p>
  *
  * <p>To setup on object to invoke command methods you must first register the object.
- * You can do this by calling an instance of the {@link CommandBus}#{@link #register(Object)} method.
- * This is usually done in a {@link Module} {@link InitializationEvent} or in an object constructor.
- * </p><p></p>
+ * You can do this by calling an instance of the {@link #register(Object)} method.
+ * This is usually done in a {@link Module} {@link InitializationEvent} or in an object constructor.</p><p></p>
  *
- * <hr><pre><b>Apollo</b>.instance.<b>COMMAND_BUS</b>.register(<b>this</b>);</pre><hr>
- *
- * <p></p><p>
- * The opposite can be done to remove an object from invoking command methods by
- * calling an instance of the {@link CommandBus}#{@link #unRegister(Object)} method.
- * </p><p></p>
- *
- * <hr><pre><b>Apollo</b>.instance.<b>COMMAND_BUS</b>.unRegister(<b>this</b>);</pre><hr>
+ * <p>The opposite can be done to remove an object from invoking command methods by
+ * calling an instance of the {@link #unRegister(Object)} method.</p>
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA
@@ -69,7 +61,7 @@ public class CommandBus {
      *
      * @param any object to be registered from the {@link CommandBus}
      */
-    public void register(@NotNull Object any) {
+    public void register(Object any) {
         for (Method method : any.getClass().getDeclaredMethods()) {
             for (Annotation annotation : method.getAnnotationsByType(Command.class)) {
 
@@ -110,7 +102,7 @@ public class CommandBus {
      * @param event chat event that's cancelable
      */
     @SubscribeEvent(priority = Priority.LOW)
-    public void onChat(@NotNull PlayerChatEvent event) {
+    public void onChat(PlayerChatEvent event) {
         if (event.message.startsWith(CommandBus.PREFIX)) {
             // Set message canceled by default.
             event.setCanceled(true);

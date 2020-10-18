@@ -17,10 +17,22 @@
 
 package net.apolloclient.event;
 
+import net.apolloclient.event.bus.*;
+import net.apolloclient.command.*;
+import net.apolloclient.module.bus.*;
+
+import java.util.Comparator;
+
 /**
- * Enum for storing the order in which event listeners are fired.
- * <p>A listener with a {@code HIGH} priority will be fired before a listener with a {@code NORMAL}
- * priority.</p>
+ * Public enum for storing {@link SubscribeEvent}, {@link EventHandler} and
+ * {@link Command} priority data used by the {@link EventBus}, {@link ModuleFactory}
+ * and {@link CommandBus} to invoke methods on order of {@link #HIGH}, {@link #NORMAL},
+ * and then {@link #LOW}.<p></p>
+ *
+ * <p>Events are sorted based on the {@link #id} integer using
+ * {@link java.util.concurrent.CopyOnWriteArrayList#sort(Comparator)} and is defaulted
+ * to {@code 1}. Event Priority is different then {@link Module#priority()} as modules can
+ * have any priority integer but events are one of 0-2.</p>
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

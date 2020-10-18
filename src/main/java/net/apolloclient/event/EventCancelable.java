@@ -22,39 +22,24 @@ import net.apolloclient.event.bus.SubscribeEvent;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Implementation of {@link Event}, allocates a class to be excepted by the {@link EventBus} and used
- * in {@link SubscribeEvent} methods. A class of this type can be called using the {@link #post()} method or
- * by calling {@link EventBus#post(Event)} method with this as the parameter.<p></p>
+ * Implementation of {@link Event}, allocates a class to be excepted by the
+ * {@link EventBus} and used in {@link SubscribeEvent} methods. A class of this
+ * type can be called using the {@link #post()} method or by calling {@link EventBus#post(Event)}
+ * method with this as the parameter.<p></p>
  *
- * <p>Events of this type can also be canceled by any {@link SubscribeEvent} method however the canceled functionality will need to be implemented on a per
- * event basis as this class only provides the {@link #isCanceled()} boolean. If an event is canceled all other methods set to be called by that event with a lower
- * priority than the current method will be canceled as well unless {@link SubscribeEvent#cancelable()} is set to false on the lower priority method.</p><p></p>
+ * <p>Events of this type can also be canceled by any {@link SubscribeEvent} method
+ * however the canceled functionality will need to be implemented on a per event basis as this
+ * class only provides the {@link #isCanceled()} boolean. If an event is canceled all other methods
+ * set to be called by that event with a lower priority than the current method will be canceled as
+ * well unless {@link SubscribeEvent#cancelable()} is set to false on the lower priority method.</p><p></p>
  *
  * <p>To setup an event class and trigger said event in {@link Mixin} ejections, extend this class and
  * populate the class with any get or set values.</p><p></p>
  *
- * <hr><pre>
- *     public <b>class</b> Example extends <b>EventCancelable</b> {
- *
- *         public final <b>String</b> eventValue;
- *
- *         public Example(<b>String</b> eventValue) { this.<b>eventValue</b> = eventValue; }
- *     }</pre><hr><p></p>
- *
- * <p>Each event comes with the following information to help with logging and overall development: </p>
- *
- * <ul>
- * <li>{@link #getEventName()} : get simple name of the event class. </li>
- * <li>{@link #getEventDocs()} : get link to the event documentation hosted on https://docs.apolloclient.net</li>
- * <li>{@link #setCanceled(boolean)} : set events canceled state</li>
- * <li>{@link #isCanceled()} : get events canceled state</li>
- * </ul>
- *
- * <p>Once your event class is created it can be called from anywhere using the before mentioned methods. If an event class
- * has set values those will need to be handled where the event is implemented using a temporary variable and then calling the event
- * using the variable you created. Any changes done to event by any {@link SubscribeEvent} methods will be represented in the variable you posted.</p><p></p>
- *
- * <hr><pre><b>Apollo</b>.instance.<b>EVENT_BUS</b>.post(<b>new ExampleEvent()</b>);</pre><hr>
+ * <p>Once your event class is created it can be called from anywhere using the before mentioned methods.
+ * If an event class has set values those will need to be handled where the event is implemented using a
+ * temporary variable and then calling the event using the variable you created. Any changes done to event
+ * by any {@link SubscribeEvent} methods will be represented in the variable you posted.</p>
  *
  * @see Event
  *
