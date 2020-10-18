@@ -23,6 +23,7 @@ import net.apolloclient.event.EventCancelable;
 import net.apolloclient.module.bus.EventHandler;
 import net.apolloclient.module.bus.ModContainer;
 import net.apolloclient.module.bus.event.ModuleEvent;
+import net.apolloclient.command.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -31,15 +32,25 @@ import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Class for holding event subscribers. The main implementation can be found in {@link Apollo}
+ * Main implementation of {@link SubscribeEvent}s generate a list of
+ * {@link EventContainer}s used to sort and invoke all event methods. Also
+ * registers event methods in {@link ModContainer}s and any other objects.<p></p>
  *
- * <p>You can register an object with the {@code register} method.
+ * <p>{@link ModContainer}s are registered in the event bus by default and there events will
+ * only be triggered if said container is enabled. However if you would like to register
+ * and external object to receive {@link SubscribeEvent} you can do so by calling
+ * the {@link #register(Object)} method with an instance of the class as parameter</p><p></p>
+ *
+ * <p>Similar to the {@link CommandBus} the opposite can be done to remove an object from
+ * invoking event methods by calling an instance of the {@link #unRegister(Object)} method. with
+ * an instance of the class as parameter</p>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @since 1.2.0-BETA
  */
 public class EventBus {
 
+    /** List of {@link EventContainer}s used to sort and invoke all event methods */
     private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<SubscribeEventContainer>> listeners = new HashMap<>();
 
     /**
@@ -79,7 +90,7 @@ public class EventBus {
      *
      * @param modContainer container to be unregistered from the EventBus *
      */
-    public void unregister(ModContainer modContainer) { modContainer.getEvents().clear(); }
+    public void unRegister(ModContainer modContainer) { modContainer.getEvents().clear(); }
 
     /**
      * Registers an object to the {@link EventBus}. All methods annotated with the {@link
@@ -118,7 +129,7 @@ public class EventBus {
      *
      * @param any object to be unregistered from the EventBus
      */
-    public void unregister(Object any) { listeners.values().forEach(it -> it.removeIf(listener -> listener.instance == any)); }
+    public void unRegister(Object any) { listeners.values().forEach(it -> it.removeIf(listener -> listener.instance == any)); }
 
     /**
      * Posts an event to the {@link EventBus}. This calls every method that is listening for the event

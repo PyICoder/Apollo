@@ -57,7 +57,8 @@ public class EventCancelable extends Event {
     public boolean isCanceled() { return canceled; }
 
     /**
-     * Set canceled state of event object.
+     * Sets the state of this event, not all events are cancelable.
+     * The functionality of setting the canceled state is defined on a per-event bases.
      *
      * @param canceled boolean to set canceled too
      */
