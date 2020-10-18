@@ -37,7 +37,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * you created. Any changes done to event by any {@link SubscribeEvent} methods will be represented in
  * the variable you posted.</p>
  *
- * @see EventCancelable
+ * @see EventCancelable Canceleable Event Class
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

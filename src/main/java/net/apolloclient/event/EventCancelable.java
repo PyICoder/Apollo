@@ -41,7 +41,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * temporary variable and then calling the event using the variable you created. Any changes done to event
  * by any {@link SubscribeEvent} methods will be represented in the variable you posted.</p>
  *
- * @see Event
+ * @see Event Default Event Class
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA
