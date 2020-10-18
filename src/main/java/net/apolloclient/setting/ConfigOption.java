@@ -15,14 +15,29 @@
   Contact: Icovid#3888 @ https://discord.com
  ⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼*/
 
-package net.apolloclient.event.impl.client.input;
+package net.apolloclient.setting;
 
-import net.apolloclient.event.Event;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 
 /**
- * Fired when right mouse button is pressed.
+ * Marks a variable to be loaded on startup and saved on
+ * game end.
  *
  * @author Icovid | Icovid#3888
- * @since 1.0.0
+ * @since b0.2
  */
-public class RightClickEvent extends Event {}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface ConfigOption {
+
+    /**
+     * @return description showed in gui tooltip
+     */
+    String description() default "the developer did not provide a description for this setting :confused_face:";
+
+
+}

@@ -1,19 +1,19 @@
-/*⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤
- Copyright (C) 2020-2021 developed by Icovid and Apollo Development Team.
+/*⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼
+  Copyright (C) 2020-2021 developed by Icovid and Apollo Development Team
 
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU Affero General Public License as published
- by the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU Affero General Public License for more details.
- You should have received a copy of the GNU Affero General Public License
- along with this program.  If not, see https://www.gnu.org/licenses/.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see https://www.gnu.org/licenses/.
 
- Contact: Icovid#3888 @ https://discord.com
- ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤*/
+  Contact: Icovid#3888 @ https://discord.com
+ ⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼*/
 
 package net.apolloclient.module;
 
@@ -21,7 +21,10 @@ import net.apolloclient.Apollo;
 import net.apolloclient.event.Event;
 import net.apolloclient.event.bus.EventContainer;
 import net.apolloclient.event.bus.SubscribeEventContainer;
-import net.apolloclient.module.bus.*;
+import net.apolloclient.module.bus.Instance;
+import net.apolloclient.module.bus.ModContainer;
+import net.apolloclient.module.bus.Module;
+import net.apolloclient.module.bus.ModuleFactory;
 import net.apolloclient.module.bus.draggable.ScreenPosition;
 import net.apolloclient.module.bus.event.DisableEvent;
 import net.apolloclient.module.bus.event.EnableEvent;
@@ -132,9 +135,8 @@ public class DraggableModuleContainer implements ModContainer {
      */
     @Override
     public void post(ModuleEvent moduleEvent) {
-        for (EventContainer eventContainer : handlers.getOrDefault(moduleEvent.getClass(), new CopyOnWriteArrayList<>())) {
+        for (EventContainer eventContainer : handlers.getOrDefault(moduleEvent.getClass(), new CopyOnWriteArrayList<>()))
             eventContainer.invoke(moduleEvent);
-        }
     }
 
     /**
@@ -207,9 +209,7 @@ public class DraggableModuleContainer implements ModContainer {
 
     /** @return HashMap of {@link ModuleEvent} with a list of {@link EventContainer} */
     @Override
-    public HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<EventContainer>> getHandlers() {
-        return handlers;
-    }
+    public HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<EventContainer>> getHandlers() { return handlers; }
 
     /** @return HashMap of {@link Event} with a list of {@link EventContainer} */
     @Override

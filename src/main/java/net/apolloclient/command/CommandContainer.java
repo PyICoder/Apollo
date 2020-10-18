@@ -1,3 +1,20 @@
+/*⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼
+  Copyright (C) 2020-2021 developed by Icovid and Apollo Development Team
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see https://www.gnu.org/licenses/.
+
+  Contact: Icovid#3888 @ https://discord.com
+ ⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼*/
+
 package net.apolloclient.command;
 
 import net.apolloclient.event.Priority;
@@ -5,34 +22,60 @@ import net.apolloclient.event.Priority;
 import java.lang.reflect.Method;
 
 /**
- * Holds command information used by {@link CommandBus}
+ * Container object used to hold needed information used in the @{@link Command}
+ * annotation by the {@link CommandBus} and to invoke methods using a string
+ * parameter.
+ *
+ * <ul>
+ * <li>{@link #instance} : instance of the object to invoke methods on.</li>
+ * <li>{@link #method} : method to invoke with string parameter.</li>
+ * <li>{@link #alias} : collection of all strings method can be invoke on.</li>
+ * <li>{@link #description} : string description of command usage.</li>
+ * <li>{@link #deleteMessage} : boolean for if command chat packet is canceled.</li>
+ * <li>{@link #ignoreCase} : boolean for if {@link CommandBus} triggers at incorrect case.</li>
+ * <li>{@link #priority} : priority of command method over other command methods.</li>
+ * </ul>
+ *
+ * <p>To invoke a {@link CommandContainer} use an instance of the objects {@link #invoke(Object...)} method
+ * with a string parameter.</p><p></p>
+ *
+ * <hr><pre><b>commands</b>.get(<b>NAME</b>).invoke(<b>args[2]</b>);                          </pre><hr>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @since 1.2.0-BETA
  */
 public class CommandContainer {
 
+    /** instance of the object to invoke methods on. */
     public final Object instance;
+    /** method to invoke with string parameter. */
     public final Method method;
-    public final String[] args;
+    /** collection of all strings method can be invoke on. */
+    public final String[] alias;
+    /** string description of command usage */
     public final String description;
+    /** boolean for if command chat packet is canceled. */
     public final boolean deleteMessage;
+    /** boolean for if {@link CommandBus} triggers at incorrect case. */
     public final boolean ignoreCase;
-    private final Priority priority;
+    /** priority of command method over other command methods. */
+    public final Priority priority;
 
     /**
-     * @param instance instance of object to invoke
-     * @param method method to invoke
-     * @param args args command can be triggered by
-     * @param description description of command purpose
-     * @param deleteMessage if chat message should still show when command triggered
-     * @param ignoreCase must be same case
-     * @param priority priority of method
+     * Creates a new {@link CommandContainer} instance with the given information.
+     *
+     * @param instance instance of the object to invoke methods on.
+     * @param method method to invoke with string parameter.
+     * @param alias collection of all strings method can be invoke on.
+     * @param description string description of command usage.
+     * @param deleteMessage boolean for if command chat packet is canceled.
+     * @param ignoreCase boolean for if {@link CommandBus} triggers at incorrect case.
+     * @param priority priority of command method over other command methods.
      */
-    public CommandContainer(Object instance, Method method, String[] args, String description, boolean deleteMessage, boolean ignoreCase, Priority priority) {
+    public CommandContainer(Object instance, Method method, String[] alias, String description, boolean deleteMessage, boolean ignoreCase, Priority priority) {
         this.instance      = instance;
         this.method        = method;
-        this.args          = args;
+        this.alias         = alias;
         this.description   = description;
         this.deleteMessage = deleteMessage;
         this.ignoreCase    = ignoreCase;
@@ -51,9 +94,4 @@ public class CommandContainer {
             e.printStackTrace();
         }
     }
-
-    /**
-     * @return priority of method
-     */
-    public Priority getPriority() { return priority; }
 }
