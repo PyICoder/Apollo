@@ -17,7 +17,9 @@
 
 package net.apolloclient.event.bus;
 
-import net.apolloclient.event.*;
+import net.apolloclient.event.Event;
+import net.apolloclient.event.EventCancelable;
+import net.apolloclient.event.Priority;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -35,10 +37,10 @@ import java.lang.annotation.Target;
  * when the method is called and if its called at all in case of
  * {@link EventCancelable#setCanceled(boolean)}</p>
  *
- * <ul>
- *  <li>{@link #priority} : priority of event methods over other event methods</li>
- *  <li>{@link #cancelable()} : boolean if event method is still called if event is canceled</li>
- * </ul>
+ * <li>{@link #priority} : priority of event methods over other event methods</li>
+ * <li>{@link #cancelable()} : boolean if event method is still called if event is canceled</li>
+ *
+ * @see EventContainer conatiner for this annotation
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

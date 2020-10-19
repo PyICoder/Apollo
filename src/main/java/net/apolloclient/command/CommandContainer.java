@@ -26,18 +26,10 @@ import java.lang.reflect.Method;
  * annotation by the {@link CommandBus} and to invoke methods using a string
  * parameter.
  *
- * <ul>
- * <li>{@link #instance} : instance of the object to invoke methods on.</li>
- * <li>{@link #method} : method to invoke with string parameter.</li>
- * <li>{@link #alias} : collection of all strings method can be invoke on.</li>
- * <li>{@link #description} : string description of command usage.</li>
- * <li>{@link #deleteMessage} : boolean for if command chat packet is canceled.</li>
- * <li>{@link #ignoreCase} : boolean for if {@link CommandBus} triggers at incorrect case.</li>
- * <li>{@link #priority} : priority of command method over other command methods.</li>
- * </ul>
- *
  * <p>To invoke a {@link CommandContainer} use an instance of the objects {@link #invoke(Object...)} method
- * single with a string parameter.</p>
+ * with a single  string parameter.</p>
+ *
+ * @see Command anotation this contains
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

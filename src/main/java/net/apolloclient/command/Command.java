@@ -35,9 +35,17 @@ import java.lang.annotation.Target;
  * the chat packet using @{@link SubscribeEvent} since all modules have a higher priority
  * than command annotations.</p><p></p>
  *
+ * <li>{@link #alias} : collection of all strings method can be invoke on.</li>
+ * <li>{@link #description} : string description of command usage.</li>
+ * <li>{@link #deleteMessage} : boolean for if command chat packet is canceled.</li>
+ * <li>{@link #ignoreCase} : boolean for if {@link CommandBus} triggers at incorrect case.</li>
+ * <li>{@link #priority} : priority of command method over other command methods.</li><p></p>
+ *
  * <p><b>Parameter</b> - the chat message excluding the command portion. For example if a chat message equals
  * {@code .hello icovid}; any command using the {@code .hello} alias will be invoke with the
  * {@code icovid} string value.</p><p></p>
+ *
+ * @see CommandContainer conatiner for this Annoation
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

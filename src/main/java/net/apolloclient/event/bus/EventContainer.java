@@ -31,6 +31,8 @@ import java.lang.reflect.Method;
  * <p>To invoke an {@link EventContainer} use an instance of the objects {@link #invoke(Object...)}
  * method with a single event parameter.</p>
  *
+ * @see SubscribeEvent event this contains
+ *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA
  */

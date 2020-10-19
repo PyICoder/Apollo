@@ -18,22 +18,18 @@
 package net.apolloclient.event.bus;
 
 import net.apolloclient.event.Priority;
-import net.apolloclient.module.bus.*;
+import net.apolloclient.module.bus.EventHandler;
 
 import java.lang.reflect.Method;
 
 /**
- * Container object used to hold needed information used in the @{@link EventHandler}
- * annotation by the {@link EventBus} and to invoke methods using a event parameter.
- *
- * <ul>
- * <li>{@link #instance} : instance of the object to invoke methods on.</li>
- * <li>{@link #method} : method to invoke with event parameter.</li>
- * <li>{@link #priority} : priority of event method over other event methods.</li>
- * </ul>
+ * Container object used to hold needed information gathered by the @{@link EventHandler}
+ * annotation by the {@link EventBus} and to invoke methods using a single event parameter.
  *
  * <p>To invoke a {@link HandlerEventContainer} use an instance of the objects {@link #invoke(Object...)}
  * method with a single event parameter.</p>
+ *
+ * @see EventHandler annotation this contains
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA
