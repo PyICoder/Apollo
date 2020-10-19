@@ -17,9 +17,7 @@
 
 package net.apolloclient.event.bus;
 
-import net.apolloclient.command.CommandBus;
-import net.apolloclient.event.Event;
-import net.apolloclient.event.Priority;
+import net.apolloclient.event.*;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,12 +25,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Allocates a method for the {@link EventBus}. must have a single parameter of type {@link Event}. Any
- * method marked with this annotation will receive all posted events.<p></p>
+ * Allocates a method for the {@link EventBus}. Any method with this annotation
+ * must have a single parameter of type {@link Event} and  will receive all posted events.<p></p>
  *
  * <p>Any method using this annotation can also use its event parameter to change any set values and
- * get values of the {@link Event} object and the following settings can be changed to adjust how the
- * event method behaves</p>
+ * get values of the {@link Event} object set to the parameter.</p><p></p>
+ *
+ * <p>The following settings also can be changed to adjust how the event method behaves such as
+ * when the method is called and if its called at all in case of
+ * {@link EventCancelable#setCanceled(boolean)}</p>
  *
  * <ul>
  *  <li>{@link #priority} : priority of event methods over other event methods</li>

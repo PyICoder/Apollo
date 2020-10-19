@@ -23,13 +23,13 @@ import net.apolloclient.module.bus.EventHandler;
 import java.lang.reflect.Method;
 
 /**
- * Extension of {@link HandlerEventContainer} used to hold information gathered by the {@link SubscribeEvent}
- * annotation by the {@link EventBus} and to invoke methods using an event parameter. Contains a
- * {@link #cancelable} boolean to include the {@link SubscribeEvent#cancelable()} functionality
- * that the {@link EventHandler} lacks
+ * Extension of {@link HandlerEventContainer} used to hold information gathered by
+ * the {@link SubscribeEvent} annotation by the {@link EventBus} and to invoke methods
+ * using an event parameter. Contains a {@link #cancelable} boolean to include the
+ * {@link SubscribeEvent#cancelable()} functionality that the {@link EventHandler} lacks
  *
- * <p>To invoke an {@link EventContainer} use an instance of the objects {@link #invoke(Object...)} method
- * with a single event parameter.</p>
+ * <p>To invoke an {@link EventContainer} use an instance of the objects {@link #invoke(Object...)}
+ * method with a single event parameter.</p>
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA

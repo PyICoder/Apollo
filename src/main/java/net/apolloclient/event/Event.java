@@ -28,8 +28,8 @@ import org.spongepowered.asm.mixin.Mixin;
  * type can be called using the {@link #post()} method or by calling {@link EventBus#post(Event)}
  * method with this as the parameter.<p></p>
  *
- * <p>To setup an event class and trigger said event in {@link Mixin} ejections, extend this class and
- * populate the class with any get or set values.</p><p></p>
+ * <p>To setup an event class and trigger said event in {@link Mixin} ejections, extend
+ * this class and populate the class with any get or set values.</p><p></p>
  *
  * <p>Once your event class is created it can be called from anywhere using the before
  * mentioned methods. If an event class has set values those will need to be handled where
