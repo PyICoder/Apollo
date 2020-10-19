@@ -23,9 +23,8 @@ import net.apolloclient.module.bus.*;
 import java.lang.reflect.Method;
 
 /**
- * Container object used to hold needed information used in the @{@link EventHandler}
- * annotation by the {@link EventBus} and to invoke methods using a event
- * parameter.
+ * Container object used to hold needed information used in the @{@link EventHandler} annotation by the
+ * {@link EventBus} and to invoke methods using a event parameter.
  *
  * <ul>
  * <li>{@link #instance} : instance of the object to invoke methods on.</li>

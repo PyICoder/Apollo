@@ -27,14 +27,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Allocates a method for the {@link EventBus}. must have a single parameter
- * of type {@link Event}. Any method marked with this annotation will receive all
- * posted events to the {@link EventBus}.<p></p>
+ * Allocates a method for the {@link EventBus}. must have a single parameter of type {@link Event}. Any
+ * method marked with this annotation will receive all posted events.<p></p>
  *
- * <p>Any method using this annotation can use its event parameter to
- * change any set values and get values of the {@link Event} object.
- * The following settings can also be changed to adjust how the event method
- * behaves </p>
+ * <p>Any method using this annotation can also use its event parameter to change any set values and
+ * get values of the {@link Event} object and the following settings can be changed to adjust how the
+ * event method behaves</p>
  *
  * <ul>
  *  <li>{@link #priority} : priority of event methods over other event methods</li>

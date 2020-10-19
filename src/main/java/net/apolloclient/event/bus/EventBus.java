@@ -48,7 +48,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class EventBus {
 
-    /** List of {@link HandlerEventContainer}s used to sort and invoke all event methods */
+    /** List of {@link EventContainer}s used to sort and invoke all event methods */
     private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> listeners = new HashMap<>();
 
     /**
