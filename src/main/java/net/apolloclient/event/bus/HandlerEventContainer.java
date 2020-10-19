@@ -18,37 +18,64 @@
 package net.apolloclient.event.bus;
 
 import net.apolloclient.event.Priority;
-import net.apolloclient.module.bus.EventHandler;
+import net.apolloclient.module.bus.*;
 
 import java.lang.reflect.Method;
 
 /**
- * Extension of {@link HandlerEventContainer} used to hold information gathered
- * by the {@link SubscribeEvent} annotation by the {@link EventBus} and to invoke
- * methods using an event parameter. Contains a {@link #cancelable} boolean to include
- * the {@link SubscribeEvent#cancelable()} functionality  that the {@link EventHandler} lacks
+ * Container object used to hold needed information used in the @{@link EventHandler}
+ * annotation by the {@link EventBus} and to invoke methods using a event
+ * parameter.
  *
- * <p>To invoke an {@link EventContainer} use an instance of the objects {@link #invoke(Object...)} method
+ * <ul>
+ * <li>{@link #instance} : instance of the object to invoke methods on.</li>
+ * <li>{@link #method} : method to invoke with event parameter.</li>
+ * <li>{@link #priority} : priority of event method over other event methods.</li>
+ * </ul>
+ *
+ * <p>To invoke a {@link HandlerEventContainer} use an instance of the objects {@link #invoke(Object...)} method
  * with a single event parameter.</p>
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA
  */
-public class EventContainer extends HandlerEventContainer {
+public class HandlerEventContainer {
 
-    /** If event method is still called if event is canceled */
-    public final boolean cancelable;
+    /** instance of the object to invoke methods on */
+    public final Object instance;
+    /** method to invoke with event parameter */
+    public final Method method;
+    /** priority of event method over other event methods */
+    private final Priority priority;
 
     /**
-     * Creates a new {@link EventContainer} instance with the given information.
+     * Creates a new {@link HandlerEventContainer} instance with the given information.
      *
      * @param instance instance of the object to invoke methods on
      * @param method method to invoke with event parameter
      * @param priority priority of event method over other event methods
-     * @param triggerCanceled If event method is still called if event is canceled.
      */
-    public EventContainer(Object instance, Method method, Priority priority, boolean triggerCanceled) {
-        super(instance, method, priority);
-        this.cancelable = triggerCanceled;
+    public HandlerEventContainer(Object instance, Method method, Priority priority) {
+        this.instance = instance;
+        this.method   = method;
+        this.priority = priority;
     }
+
+    /**
+     * Invoke method using instance.
+     *
+     * @param args for invoking.
+     */
+    public void invoke(Object... args) {
+        try {
+            this.method.invoke(instance, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @return priority of method
+     */
+    public Priority getPriority() { return priority; }
 }

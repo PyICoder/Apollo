@@ -18,9 +18,9 @@
 package net.apolloclient.module.bus;
 
 import net.apolloclient.event.Event;
-import net.apolloclient.event.bus.EventContainer;
+import net.apolloclient.event.bus.HandlerEventContainer;
 import net.apolloclient.event.bus.SubscribeEvent;
-import net.apolloclient.event.bus.SubscribeEventContainer;
+import net.apolloclient.event.bus.EventContainer;
 import net.apolloclient.module.Category;
 import net.apolloclient.module.ModuleContainer;
 import net.apolloclient.module.bus.event.ModuleEvent;
@@ -115,16 +115,16 @@ public interface ModContainer {
     /**
      * Tracks all methods annotated with {@link EventHandler}
      *
-     * @return HashMap of {@link ModuleEvent} with a list of {@link EventContainer}
+     * @return HashMap of {@link ModuleEvent} with a list of {@link HandlerEventContainer}
      */
-    HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<EventContainer>> getHandlers();
+    HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<HandlerEventContainer>> getHandlers();
 
     /**
      * Tracks all methods annotated with {@link SubscribeEvent}
      *
-     * @return HashMap of {@link Event} with a list of {@link EventContainer}
+     * @return HashMap of {@link Event} with a list of {@link HandlerEventContainer}
      */
-    HashMap<Class<? extends Event>, CopyOnWriteArrayList<SubscribeEventContainer>> getEvents();
+    HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> getEvents();
 
     /**
      * Post an event to module and any module requesting its events

@@ -18,7 +18,7 @@
 package net.apolloclient.module.bus;
 
 import net.apolloclient.Apollo;
-import net.apolloclient.event.bus.EventContainer;
+import net.apolloclient.event.bus.HandlerEventContainer;
 import net.apolloclient.module.bus.draggable.Draggable;
 import net.apolloclient.module.DraggableModuleContainer;
 import net.apolloclient.module.ModuleContainer;
@@ -134,7 +134,7 @@ public class ModuleFactory {
                     if (!modContainer.getHandlers().containsKey(moduleEvent))
                         modContainer.getHandlers().put(moduleEvent, new CopyOnWriteArrayList<>());
 
-                    modContainer.getHandlers().get(moduleEvent).add(new EventContainer(modContainer.getInstance(), method, method.getAnnotation(EventHandler.class).priority()));
+                    modContainer.getHandlers().get(moduleEvent).add(new HandlerEventContainer(modContainer.getInstance(), method, method.getAnnotation(EventHandler.class).priority()));
 
                     Apollo.log("[" + modContainer.getName() + "] [HANDLE] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
 
@@ -167,7 +167,7 @@ public class ModuleFactory {
                         if (!modContainer.getHandlers().containsKey(moduleEvent))
                             modContainer.getHandlers().put(moduleEvent, new CopyOnWriteArrayList<>());
 
-                        modContainer.getHandlers().get(moduleEvent).add(new EventContainer(module.getInstance(), method,  method.getAnnotation(EventHandler.class).priority()));
+                        modContainer.getHandlers().get(moduleEvent).add(new HandlerEventContainer(module.getInstance(), method,  method.getAnnotation(EventHandler.class).priority()));
 
                         Apollo.log("[" + modContainer.getName() + "] [EVENT-" + module.getName().toUpperCase() + "] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
 

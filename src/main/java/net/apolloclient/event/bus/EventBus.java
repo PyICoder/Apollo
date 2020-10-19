@@ -31,7 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Main implementation of {@link SubscribeEvent}s generate a list of
- * {@link EventContainer}s used to sort and invoke all event methods. Also
+ * {@link HandlerEventContainer}s used to sort and invoke all event methods. Also
  * registers event methods in {@link ModContainer}s and any other objects.<p></p>
  *
  * <p>{@link ModContainer}s are registered in the event bus by default and there events will
@@ -48,8 +48,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class EventBus {
 
-    /** List of {@link EventContainer}s used to sort and invoke all event methods */
-    private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<SubscribeEventContainer>> listeners = new HashMap<>();
+    /** List of {@link HandlerEventContainer}s used to sort and invoke all event methods */
+    private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> listeners = new HashMap<>();
 
     /**
      * Register mod container instance to receive {@link Event}s using
@@ -73,7 +73,7 @@ public class EventBus {
                     if (!modContainer.getEvents().containsKey(event))
                         modContainer.getEvents().put(event, new CopyOnWriteArrayList<>());
                     // Add event to container hash
-                    modContainer.getEvents().get(event).add(new SubscribeEventContainer(modContainer.getInstance(), method, method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
+                    modContainer.getEvents().get(event).add(new EventContainer(modContainer.getInstance(), method, method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
                     // Log the event
                     Apollo.log("[" + modContainer.getName() + "] [EVENT] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
                     // Sort container hash by priority
@@ -99,7 +99,7 @@ public class EventBus {
 
     /**
      * Registers an object to the {@link EventBus}. All methods annotated with the {@link
-     * SubscribeEvent} annotation will be cached into a new {@link EventContainer} and
+     * SubscribeEvent} annotation will be cached into a new {@link HandlerEventContainer} and
      * called when that Event is posted.
      *
      * @param any object you want to register
@@ -117,7 +117,7 @@ public class EventBus {
                     if (!listeners.containsKey(event))
                         listeners.put(event, new CopyOnWriteArrayList<>());
                     // Add event to listener hash
-                    listeners.get(event).add(new SubscribeEventContainer(any, method, method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
+                    listeners.get(event).add(new EventContainer(any, method, method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
                     // Log the event
                     Apollo.log("[" + any.getClass().getSimpleName() + "] [EVENT] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
                     // Sort container hash by priority
@@ -149,13 +149,13 @@ public class EventBus {
         boolean cancelable = event instanceof EventCancelable;
         // trigger event to all module containers by priority
         for (ModContainer container : Apollo.MODULE_FACTORY.modules) {
-            for (SubscribeEventContainer eventContainer : container.getEvents().getOrDefault(event.getClass(), new CopyOnWriteArrayList<>())) {
+            for (EventContainer eventContainer : container.getEvents().getOrDefault(event.getClass(), new CopyOnWriteArrayList<>())) {
                 if (cancelable && ((EventCancelable) event).isCanceled() && eventContainer.cancelable) continue;
                 eventContainer.invoke(event);
             }
         }
         // trigger event to all other classes
-        for (SubscribeEventContainer container : this.listeners.getOrDefault(event.getClass(), new CopyOnWriteArrayList<>())) {
+        for (EventContainer container : this.listeners.getOrDefault(event.getClass(), new CopyOnWriteArrayList<>())) {
             if (cancelable && ((EventCancelable) event).isCanceled() && container.cancelable) continue;
             container.invoke(event);
         }

@@ -19,8 +19,8 @@ package net.apolloclient.module;
 
 import net.apolloclient.Apollo;
 import net.apolloclient.event.Event;
+import net.apolloclient.event.bus.HandlerEventContainer;
 import net.apolloclient.event.bus.EventContainer;
-import net.apolloclient.event.bus.SubscribeEventContainer;
 import net.apolloclient.module.bus.Instance;
 import net.apolloclient.module.bus.ModContainer;
 import net.apolloclient.module.bus.Module;
@@ -62,8 +62,8 @@ public class ModuleContainer implements ModContainer {
     private boolean enabled;
 
     // HashMap of all events so they can be triggered in order of module priority
-    private final HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<EventContainer>> handlers = new HashMap<>();
-    private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<SubscribeEventContainer>> events = new HashMap<>();
+    private final HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<HandlerEventContainer>> handlers = new HashMap<>();
+    private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> events = new HashMap<>();
 
     public ModuleContainer(Module moduleAnnotation, Object instance) {
         this(moduleAnnotation.name(), moduleAnnotation.description(), moduleAnnotation.author(),
@@ -108,7 +108,7 @@ public class ModuleContainer implements ModContainer {
             Apollo.EVENT_BUS.register(this);
             post(new EnableEvent(this));
         } else {
-            Apollo.EVENT_BUS.unregister(this);
+            Apollo.EVENT_BUS.unRegister(this);
             post(new DisableEvent(this));
         }
     }
@@ -129,8 +129,8 @@ public class ModuleContainer implements ModContainer {
      */
     @Override
     public void post(ModuleEvent moduleEvent) {
-        for (EventContainer eventContainer : handlers.getOrDefault(moduleEvent.getClass(), new CopyOnWriteArrayList<>())) {
-            eventContainer.invoke(moduleEvent);
+        for (HandlerEventContainer handlerEventContainer : handlers.getOrDefault(moduleEvent.getClass(), new CopyOnWriteArrayList<>())) {
+            handlerEventContainer.invoke(moduleEvent);
         }
     }
 
@@ -202,15 +202,15 @@ public class ModuleContainer implements ModContainer {
         return this.disallowedServersIP;
     }
 
-    /** @return HashMap of {@link ModuleEvent} with a list of {@link EventContainer} */
+    /** @return HashMap of {@link ModuleEvent} with a list of {@link HandlerEventContainer} */
     @Override
-    public HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<EventContainer>> getHandlers() {
+    public HashMap<Class<? extends ModuleEvent>, CopyOnWriteArrayList<HandlerEventContainer>> getHandlers() {
         return handlers;
     }
 
-    /** @return HashMap of {@link Event} with a list of {@link EventContainer} */
+    /** @return HashMap of {@link Event} with a list of {@link HandlerEventContainer} */
     @Override
-    public HashMap<Class<? extends Event>, CopyOnWriteArrayList<SubscribeEventContainer>> getEvents() {
+    public HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> getEvents() {
         return events;
     }
 }
