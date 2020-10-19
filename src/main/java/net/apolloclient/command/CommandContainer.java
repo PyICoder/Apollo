@@ -22,12 +22,11 @@ import net.apolloclient.event.Priority;
 import java.lang.reflect.Method;
 
 /**
- * Container object used to hold needed information used in the @{@link Command}
- * annotation by the {@link CommandBus} and to invoke methods using a string
- * parameter.
+ * Container object used to hold needed information used in the @{@link Command} annotation by the {@link CommandBus}
+ * and to invoke methods using a string parameter.
  *
  * <p>To invoke a {@link CommandContainer} use an instance of the objects {@link #invoke(Object...)} method
- * with a single  string parameter.</p>
+ * with a single string parameter.</p>
  *
  * @author Icovid | Icovid#3888
  * @see Command anotation this contains
@@ -68,7 +67,7 @@ public class CommandContainer {
         this.description   = description;
         this.deleteMessage = deleteMessage;
         this.ignoreCase    = ignoreCase;
-        this.priority = priority;
+        this.priority      = priority;
     }
 
     /**
