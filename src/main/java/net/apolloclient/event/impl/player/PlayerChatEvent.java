@@ -18,19 +18,26 @@
 package net.apolloclient.event.impl.player;
 
 import net.apolloclient.event.EventCancelable;
+import net.minecraft.util.IChatComponent;
 
 /**
- * Fired when the client sends a message to the server.
+ * Implementation of {@link EventCancelable} posted when the player attempts to send a chat message to the server.
+ *
+ * <p>Canceling this event will result in the {@link IChatComponent} not being sent. </p>
  *
  * @author Nora Cos | Nora#0001
- * @since 1.0.0
+ * @see net.apolloclient.mixins.entity.MixinEntityPlayerSP#sendChatMessage(String) injection
+ * @since 1.2.0-BETA
  */
 public class PlayerChatEvent extends EventCancelable {
 
-  public final String message;
+    /** the message being sent to server */
+    public final String message;
 
-  /** @param chatMessage message being sent to the server */
-  public PlayerChatEvent(String chatMessage) {
-    message = chatMessage;
-  }
+    /**
+     * @param chatMessage the message being sent to server
+     */
+    public PlayerChatEvent(String chatMessage) {
+        message = chatMessage;
+    }
 }

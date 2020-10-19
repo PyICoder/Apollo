@@ -18,20 +18,27 @@
 package net.apolloclient.event.impl.hud;
 
 import net.apolloclient.event.Event;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when current {@link GuiScreen} is changed.
+ * Implementation of {@link Event} posted when {@link Minecraft#displayGuiScreen(GuiScreen)} is called and current
+ * gui screen is switched.
  *
  * @author MatthewTGM | MatthewTGM#4058
- * @since 1.0.0
+ * @see net.apolloclient.mixins.client.MixinMinecraft#displayGuiScreen(GuiScreen, CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class GuiSwitchEvent extends Event {
 
-  public final GuiScreen guiScreen;
+    /** the {@link GuiScreen} display is switching to */
+    public final GuiScreen guiScreen;
 
-  /** @param guiScreen the GuiScreen. */
-  public GuiSwitchEvent(GuiScreen guiScreen) {
-    this.guiScreen = guiScreen;
-  }
+    /**
+     * @param guiScreen the {@link GuiScreen} display is switching to
+     */
+    public GuiSwitchEvent(GuiScreen guiScreen) {
+        this.guiScreen = guiScreen;
+    }
 }

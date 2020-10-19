@@ -29,38 +29,37 @@ import java.lang.reflect.Method;
  * <p>To invoke a {@link CommandContainer} use an instance of the objects {@link #invoke(Object...)} method
  * with a single  string parameter.</p>
  *
- * @see Command anotation this contains
- *
  * @author Icovid | Icovid#3888
+ * @see Command anotation this contains
  * @since 1.2.0-BETA
  */
 public class CommandContainer {
 
-    /** instance of the object to invoke methods on. */
+    /** the instance of the object to invoke methods on. */
     public final Object instance;
-    /** method to invoke with string parameter. */
+    /** the method to invoke with string parameter. */
     public final Method method;
-    /** collection of all strings method can be invoke on. */
+    /** the collection of all strings method can be invoke on. */
     public final String[] alias;
-    /** string description of command usage */
+    /** the string description of command usage */
     public final String description;
-    /** boolean for if command chat packet is canceled. */
+    /** if command chat packet is canceled. */
     public final boolean deleteMessage;
-    /** boolean for if {@link CommandBus} triggers at incorrect case. */
+    /** if {@link CommandBus} triggers at incorrect case. */
     public final boolean ignoreCase;
-    /** priority of command method over other command methods. */
+    /** the priority of command method over other command methods. */
     public final Priority priority;
 
     /**
      * Creates a new {@link CommandContainer} instance with the given information.
      *
-     * @param instance instance of the object to invoke methods on.
-     * @param method method to invoke with string parameter.
-     * @param alias collection of all strings method can be invoke on.
-     * @param description string description of command usage.
-     * @param deleteMessage boolean for if command chat packet is canceled.
-     * @param ignoreCase boolean for if {@link CommandBus} triggers at incorrect case.
-     * @param priority priority of command method over other command methods.
+     * @param instance      the instance of the object to invoke methods on.
+     * @param method        the method to invoke with string parameter.
+     * @param alias         the collection of all strings method can be invoke on.
+     * @param description   the string description of command usage.
+     * @param deleteMessage if command chat packet is canceled.
+     * @param ignoreCase    if {@link CommandBus} triggers at incorrect case.
+     * @param priority      the priority of command method over other command methods.
      */
     public CommandContainer(Object instance, Method method, String[] alias, String description, boolean deleteMessage, boolean ignoreCase, Priority priority) {
         this.instance      = instance;
@@ -69,13 +68,13 @@ public class CommandContainer {
         this.description   = description;
         this.deleteMessage = deleteMessage;
         this.ignoreCase    = ignoreCase;
-        this.priority      = priority;
+        this.priority = priority;
     }
 
     /**
      * Invoke method using instance.
      *
-     * @param args for invoking.
+     * @param args the arguments for invoking method.
      */
     public void invoke(Object... args) {
         try {

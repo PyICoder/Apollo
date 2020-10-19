@@ -40,9 +40,8 @@ import java.lang.annotation.Target;
  * <li>{@link #priority} : priority of event methods over other event methods</li>
  * <li>{@link #cancelable()} : boolean if event method is still called if event is canceled</li>
  *
- * @see EventContainer conatiner for this annotation
- *
  * @author Icovid | Icovid#3888
+ * @see EventContainer conatiner for this annotation
  * @since 1.2.0-BETA
  */
 @Retention(value = RetentionPolicy.RUNTIME)
@@ -50,12 +49,12 @@ import java.lang.annotation.Target;
 public @interface SubscribeEvent {
 
     /**
-     * @return priority of event methods over other event methods.
+     * @return the priority of event methods over other event methods.
      */
     Priority priority() default Priority.NORMAL;
 
     /**
-     * @return weather event method is still called if event is canceled.
+     * @return is still called if event is canceled.
      */
     boolean cancelable() default true;
 }

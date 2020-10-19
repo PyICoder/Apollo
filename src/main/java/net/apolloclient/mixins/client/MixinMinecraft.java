@@ -38,7 +38,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target ejections for Minecraft.class.
+ * Event target injections for Minecraft.class.
  *
  * @author Icovid | Icovid#3888
  * @since b0.2

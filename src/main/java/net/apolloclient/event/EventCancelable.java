@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.Mixin;
  * set to be called by that event with a lower priority than the current method will be canceled as
  * well unless {@link SubscribeEvent#cancelable()} is set to false on the lower priority method.</p><p></p>
  *
- * <p>To setup an event class and trigger said event in {@link Mixin} ejections, extend this class and
+ * <p>To setup an event class and trigger said event in {@link Mixin} injections, extend this class and
  * populate the class with any get or set values.</p><p></p>
  *
  * <p>Once your event class is created it can be called from anywhere using the before mentioned methods.

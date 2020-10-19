@@ -55,16 +55,14 @@ public class CommandBus {
     private final CopyOnWriteArrayList<CommandContainer> commands = new CopyOnWriteArrayList<>();
 
     /**
-     * Registers an object in the {@link CommandBus}. Any method annotated
-     * with @{@link Command} will be cached into a new {@link CommandContainer} object
-     * and added to the {@link #commands} CopyOnWriteArrayList.
+     * Registers an object in the {@link CommandBus}. Any method annotated with @{@link Command} will be cached into
+     * a new {@link CommandContainer} object and added to the {@link #commands} CopyOnWriteArrayList.
      *
-     * @param any object to be registered from the {@link CommandBus}
+     * @param any the object to be registered
      */
     public void register(Object any) {
         for (Method method : any.getClass().getDeclaredMethods()) {
             for (Annotation annotation : method.getAnnotationsByType(Command.class)) {
-
                 // Check if methods as 1 parameter of type string.
                 if (method.getParameterTypes().length == 1 && String.class.isAssignableFrom(method.getParameterTypes()[0])) {
                     // Set method accessible in case its private.
@@ -86,20 +84,20 @@ public class CommandBus {
     }
 
     /**
-     * Unregisters an object from the {@link CommandBus}. Any method annotated
-     * with @{@link Command} will be removed from the current {@link #commands} method cache.
+     * Unregisters an object from the {@link CommandBus}. Any method annotated with @{@link Command} will be removed
+     * from the current {@link #commands} method cache.
      *
-     * @param any object to be unregistered from the {@link CommandBus}
+     * @param any the object to be unregistered from the {@link CommandBus}
      */
     public void unRegister(Object any) {
         commands.removeIf(listener -> listener.instance == any);
     }
 
     /**
-     * Test chat event against all cached {@link CommandContainer}s and invoke
-     * container method on appropriate alias.
+     * Test chat event against all cached {@link CommandContainer}s and invoke container method on appropriate
+     * alias.
      *
-     * @param event chat event that's cancelable
+     * @param event the chat event that's cancelable
      */
     @SubscribeEvent(priority = Priority.LOW)
     public void onChat(PlayerChatEvent event) {
@@ -109,7 +107,9 @@ public class CommandBus {
             // Split command and string after command.
             String[] args = event.message.split(" ", 2);
             for (CommandContainer container : this.commands) {
-                if (Arrays.stream(container.alias).anyMatch(container.ignoreCase ? args[0].replaceFirst(".", "")::equalsIgnoreCase : args[0].replaceFirst(".", "")::equals)) {
+                if (Arrays.stream(container.alias).anyMatch(container.ignoreCase ?
+                                                                    args[0].replaceFirst(".", "")::equalsIgnoreCase :
+                                                                    args[0].replaceFirst(".", "")::equals)) {
                     // Invoke method in remaining string length is greater than 1
                     if (args.length > 1) container.invoke(args[1]);
                     event.setCanceled(container.deleteMessage);

@@ -18,22 +18,29 @@
 package net.apolloclient.event.impl.client;
 
 import net.apolloclient.event.EventCancelable;
+import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.IChatComponent;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when the client receives a chat packet and it is not an action bar packet.
+ * Implementation of {@link EventCancelable} posted when a chat packet is received by the player that is not an
+ * instance of {@link S02PacketChat#type} 2.<p></p>
  *
- * <p>If you want the action bar, see the {@link ActionBarEvent} class.
+ * <p>Canceling this event will result in the {@link IChatComponent} not rendering. </p>
  *
  * @author Nora Cos | Nora#0001
- * @since 1.0.0
+ * @see net.apolloclient.mixins.network.MixinNetHandlerPlayClient#onChatPacket(S02PacketChat, CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class ChatReceivedEvent extends EventCancelable {
 
-  public final IChatComponent chatComponent;
+    /** the {@link IChatComponent} collected from current {@link S02PacketChat} */
+    public final IChatComponent chatComponent;
 
-  /** @param chatComponent chat component from the packet */
-  public ChatReceivedEvent(IChatComponent chatComponent) {
-    this.chatComponent = chatComponent;
-  }
+    /**
+     * @param chatComponent the {@link IChatComponent} collected from current {@link S02PacketChat}
+     */
+    public ChatReceivedEvent(IChatComponent chatComponent) {
+        this.chatComponent = chatComponent;
+    }
 }

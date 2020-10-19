@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target ejections for MixinNetHandlerPlayClient.class.
+ * Event target injections for MixinNetHandlerPlayClient.class.
  *
  * @author Nora Cos | Nora#0001
  * @since 1.0.0

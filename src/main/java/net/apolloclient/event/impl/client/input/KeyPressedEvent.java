@@ -18,24 +18,29 @@
 package net.apolloclient.event.impl.client.input;
 
 import net.apolloclient.event.Event;
+import org.lwjgl.input.Keyboard;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when key is pressed.
+ * Implementation of {@link Event} posted when any key is pressed on the {@link Keyboard}
  *
  * @author Icovid | Icovid#3888
- * @since 1.0.0
+ * @see net.apolloclient.mixins.client.MixinMinecraft#runTickKeyboard(CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class KeyPressedEvent extends Event {
 
-  public final boolean repeatedKey;
-  public final int keyCode;
+    /** if key event is same as previous key event */
+    public final boolean repeatedKey;
+    /** int code of key pressed */
+    public final int keyCode;
 
-  /**
-   * @param repeatedKey is key event same as last key event
-   * @param keyCode int code of key
-   */
-  public KeyPressedEvent(boolean repeatedKey, int keyCode) {
-    this.repeatedKey = repeatedKey;
-    this.keyCode = keyCode;
-  }
+    /**
+     * @param repeatedKey if key event is same as previous key event
+     * @param keyCode     the int code of key pressed
+     */
+    public KeyPressedEvent(boolean repeatedKey, int keyCode) {
+        this.repeatedKey = repeatedKey;
+        this.keyCode     = keyCode;
+    }
 }

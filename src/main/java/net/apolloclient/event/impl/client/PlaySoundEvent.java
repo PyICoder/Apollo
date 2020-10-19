@@ -19,19 +19,27 @@ package net.apolloclient.event.impl.client;
 
 import net.apolloclient.event.EventCancelable;
 import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.SoundManager;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired sound is played on client.
+ * Implementation of {@link EventCancelable} posted each time clint plays a sound using the {@link SoundManager}
+ *
+ * <p>Canceling this event will result in the {@link ISound} not playing</p>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2*
+ * @see net.apolloclient.mixins.client.MixinSoundManager#playSound(ISound, CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class PlaySoundEvent extends EventCancelable {
 
-  public final ISound iSound;
+    /** the {@link ISound} attempting to be played */
+    public final ISound iSound;
 
-  /** @param sound sound played */
-  public PlaySoundEvent(ISound sound) {
-    this.iSound = sound;
-  }
+    /**
+     * @param sound the {@link ISound} attempting to be played
+     */
+    public PlaySoundEvent(ISound sound) {
+        this.iSound = sound;
+    }
 }

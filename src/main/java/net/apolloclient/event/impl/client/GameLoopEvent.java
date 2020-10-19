@@ -18,11 +18,13 @@
 package net.apolloclient.event.impl.client;
 
 import net.apolloclient.event.Event;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired every tick.
+ * Implementation of {@link Event} posted on every game tick
  *
  * @author Nora Cos | Nora#0001
- * @since 1.0.0
+ * @see net.apolloclient.mixins.client.MixinMinecraft#runGameLoop(CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class GameLoopEvent extends Event {}

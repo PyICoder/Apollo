@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
- * Event target ejections for RenderEntityItem.class.
+ * Event target injections for RenderEntityItem.class.
  *
  * @author Icovid | Icovid#3888
  * @since b0.2

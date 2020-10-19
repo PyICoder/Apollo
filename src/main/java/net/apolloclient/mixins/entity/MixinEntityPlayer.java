@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target ejections for EntityPlayer.class.
+ * Event target injections for EntityPlayer.class.
  *
  * @author MatthewTGM | MatthewTGM#4058
  * @since b0.2

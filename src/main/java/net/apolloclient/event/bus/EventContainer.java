@@ -23,31 +23,29 @@ import net.apolloclient.module.bus.EventHandler;
 import java.lang.reflect.Method;
 
 /**
- * Extension of {@link HandlerEventContainer} used to hold information gathered by
- * the {@link SubscribeEvent} annotation by the {@link EventBus} and to invoke methods
- * using an event parameter. Contains a {@link #cancelable} boolean to include the
- * {@link SubscribeEvent#cancelable()} functionality that the {@link EventHandler} lacks
+ * Extension of {@link HandlerEventContainer} used to hold information gathered by the {@link SubscribeEvent}
+ * annotation by the {@link EventBus} and to invoke methods using an event parameter. Contains a {@link #cancelable}
+ * boolean to include the {@link SubscribeEvent#cancelable()} functionality that the {@link EventHandler} lacks
  *
  * <p>To invoke an {@link EventContainer} use an instance of the objects {@link #invoke(Object...)}
  * method with a single event parameter.</p>
  *
- * @see SubscribeEvent event this contains
- *
  * @author Icovid | Icovid#3888
+ * @see SubscribeEvent event this contains
  * @since 1.2.0-BETA
  */
 public class EventContainer extends HandlerEventContainer {
 
-    /** If event method is still called if event is canceled */
+    /** if event method is still called in case event is canceled */
     public final boolean cancelable;
 
     /**
      * Creates a new {@link EventContainer} instance with the given information.
      *
-     * @param instance instance of the object to invoke methods on
-     * @param method method to invoke with event parameter
-     * @param priority priority of event method over other event methods
-     * @param triggerCanceled If event method is still called if event is canceled.
+     * @param instance        the instance of the object to invoke methods on
+     * @param method          the method to invoke with event parameter
+     * @param priority        the priority of event method over other event methods
+     * @param triggerCanceled if event method is still called in case event is canceled
      */
     public EventContainer(Object instance, Method method, Priority priority, boolean triggerCanceled) {
         super(instance, method, priority);

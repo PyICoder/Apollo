@@ -18,28 +18,36 @@
 package net.apolloclient.event.impl.world;
 
 import net.apolloclient.event.Event;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.WorldSettings;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when player joins single player world.
+ * Implementation of {@link Event} posted when {@link net.minecraft.client.Minecraft#thePlayer()} joins a single
+ * player world using {@link Minecraft#launchIntegratedServer(String, String, WorldSettings)}.
  *
  * @author Icovid | Icovid#3888
- * @since 1.0.0
+ * @see net.apolloclient.mixins.client.MixinMinecraft#joinSinglePlayer(String, String, WorldSettings, CallbackInfo)
+ * injection
+ * @since 1.2.0-BETA
  */
 public class SinglePlayerJoinEvent extends Event {
 
-  public final String folderName;
-  public final String worldName;
-  public final WorldSettings worldSettings;
+    /** the name of folder world file is located in */
+    public final String folderName;
+    /** the name of world */
+    public final String worldName;
+    /** the {@link WorldSettings} of the world */
+    public final WorldSettings worldSettings;
 
-  /**
-   * @param folderName name of folder world file is located in.
-   * @param worldName name of world
-   * @param worldSettings settings of world
-   */
-  public SinglePlayerJoinEvent(String folderName, String worldName, WorldSettings worldSettings) {
-    this.folderName = folderName;
-    this.worldName = worldName;
-    this.worldSettings = worldSettings;
-  }
+    /**
+     * @param folderName    the name of folder world file is located in
+     * @param worldName     the name of world
+     * @param worldSettings the {@link WorldSettings} of the world
+     */
+    public SinglePlayerJoinEvent(String folderName, String worldName, WorldSettings worldSettings) {
+        this.folderName    = folderName;
+        this.worldName     = worldName;
+        this.worldSettings = worldSettings;
+    }
 }

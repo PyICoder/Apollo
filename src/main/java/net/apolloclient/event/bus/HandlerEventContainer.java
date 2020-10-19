@@ -29,26 +29,25 @@ import java.lang.reflect.Method;
  * <p>To invoke a {@link HandlerEventContainer} use an instance of the objects {@link #invoke(Object...)}
  * method with a single event parameter.</p>
  *
- * @see EventHandler annotation this contains
- *
  * @author Icovid | Icovid#3888
+ * @see EventHandler annotation this contains
  * @since 1.2.0-BETA
  */
 public class HandlerEventContainer {
 
-    /** instance of the object to invoke methods on */
+    /** the instance of the object to invoke methods on */
     public final Object instance;
-    /** method to invoke with event parameter */
+    /** the method to invoke with event parameter */
     public final Method method;
-    /** priority of event method over other event methods */
+    /** the priority of event method over other event methods */
     private final Priority priority;
 
     /**
      * Creates a new {@link HandlerEventContainer} instance with the given information.
      *
-     * @param instance instance of the object to invoke methods on
-     * @param method method to invoke with event parameter
-     * @param priority priority of event method over other event methods
+     * @param instance the instance of the object to invoke methods on
+     * @param method   the method to invoke with event parameter
+     * @param priority the priority of event method over other event methods
      */
     public HandlerEventContainer(Object instance, Method method, Priority priority) {
         this.instance = instance;
@@ -59,7 +58,7 @@ public class HandlerEventContainer {
     /**
      * Invoke method using instance.
      *
-     * @param args for invoking.
+     * @param args the arguments for invoking method.
      */
     public void invoke(Object... args) {
         try {
@@ -70,7 +69,7 @@ public class HandlerEventContainer {
     }
 
     /**
-     * @return priority of method
+     * @return the priority of method
      */
     public Priority getPriority() { return priority; }
 }

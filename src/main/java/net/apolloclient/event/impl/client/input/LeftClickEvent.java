@@ -18,11 +18,14 @@
 package net.apolloclient.event.impl.client.input;
 
 import net.apolloclient.event.Event;
+import org.lwjgl.input.Mouse;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when left mouse button is pressed.
+ * Implementation of {@link Event} posted when left button is pressed on the {@link Mouse}.
  *
  * @author Icovid | Icovid#3888
- * @since 1.0.0
+ * @see net.apolloclient.mixins.client.MixinMinecraft#leftClickMouse(CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class LeftClickEvent extends Event {}

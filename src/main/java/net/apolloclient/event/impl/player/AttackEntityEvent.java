@@ -18,20 +18,27 @@
 package net.apolloclient.event.impl.player;
 
 import net.apolloclient.event.Event;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when player attacks an entity.
+ * Implementation of {@link Event} posted when {@link Minecraft#thePlayer()} attacks another entity
  *
  * @author MatthewTGM | MatthewTGM#4058
- * @since 1.0.0
+ * @see net.apolloclient.mixins.entity.MixinEntityPlayer#attackTargetEntityWithCurrentItem(Entity, CallbackInfo)
+ * injection
+ * @since 1.2.0-BETA
  */
 public class AttackEntityEvent extends Event {
 
-  public final Entity target;
+    /** the {@link Entity} {@link Minecraft#thePlayer()} has attacked */
+    public final Entity target;
 
-  /** @param target entity hit */
-  public AttackEntityEvent(Entity target) {
-    this.target = target;
-  }
+    /**
+     * @param target the {@link Entity} {@link Minecraft#thePlayer()} has attacked
+     */
+    public AttackEntityEvent(Entity target) {
+        this.target = target;
+    }
 }

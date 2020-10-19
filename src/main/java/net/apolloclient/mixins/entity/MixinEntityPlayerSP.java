@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
- * Event target ejections for EntityPlayerSP.class.
+ * Event target injections for EntityPlayerSP.class.
  *
  * @author Nora Cos | Nora#0001
  * @since b02

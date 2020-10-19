@@ -45,9 +45,8 @@ import java.lang.annotation.Target;
  * {@code .hello icovid}; any command using the {@code .hello} alias will be invoke with the
  * {@code icovid} string value.</p><p></p>
  *
- * @see CommandContainer conatiner for this Annoation
- *
  * @author Icovid | Icovid#3888
+ * @see CommandContainer conatiner for this annoation
  * @since 1.2.0-BETA
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -55,27 +54,27 @@ import java.lang.annotation.Target;
 public @interface Command {
 
     /**
-     * @return collection of all strings method can be invoke on.
+     * @return the collection of all strings method can be invoke on.
      */
     String[] alias();
 
     /**
-     * @return string description of command usage.
+     * @return the string description of command usage.
      */
     String description();
 
     /**
-     * @return boolean for if command chat packet is canceled.
+     * @return if command chat packet is canceled.
      */
     boolean deleteMessage() default true;
 
     /**
-     * @return boolean for if {@link CommandBus} triggers at incorrect case
+     * @return if {@link CommandBus} triggers at incorrect case
      */
     boolean ignoreCase() default true;
 
     /**
-     * @return priority of command method over other command methods.
+     * @return the priority of command method over other command methods.
      */
     Priority priority() default Priority.NORMAL;
 }

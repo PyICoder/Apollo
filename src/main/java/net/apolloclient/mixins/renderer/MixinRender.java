@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target ejections for Render.class TODO: IMPLEMENT THIS IN MODULE / COSMETIC GUI
+ * Event target injections for Render.class TODO: IMPLEMENT THIS IN MODULE / COSMETIC GUI
  *
  * @author MatthewTGM | MatthewTGM#4058
  * @since 1.0.0

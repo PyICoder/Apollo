@@ -19,18 +19,24 @@ package net.apolloclient.event.impl.world;
 
 import net.apolloclient.event.Event;
 import net.minecraft.client.multiplayer.WorldClient;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Fired when player world is changed.
+ * Implementation of {@link Event} posted when {@link net.minecraft.client.Minecraft#thePlayer()} loads any {@link
+ * WorldClient}.
  *
  * @author Icovid | Icovid#3888
- * @since 1.0.0
+ * @see net.apolloclient.mixins.client.MixinMinecraft#loadWorld(WorldClient, CallbackInfo) injection
+ * @since 1.2.0-BETA
  */
 public class LoadWorldEvent extends Event {
 
+  /** the new {@link WorldClient} loaded */
   public final WorldClient worldClient;
 
-  /** @param worldClient new world client loaded */
+  /**
+   * @param worldClient the new {@link WorldClient} loaded
+   */
   public LoadWorldEvent(WorldClient worldClient) {
     this.worldClient = worldClient;
   }

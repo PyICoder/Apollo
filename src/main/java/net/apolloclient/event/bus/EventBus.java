@@ -30,18 +30,17 @@ import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Main implementation of {@link SubscribeEvent}s generate a list of
- * {@link HandlerEventContainer}s used to sort and invoke all event methods. Also
- * registers event methods in {@link ModContainer}s and any other objects.<p></p>
+ * Main implementation of {@link SubscribeEvent}s generate a list of {@link HandlerEventContainer}s used to sort and
+ * invoke all event methods. Also registers event methods in {@link ModContainer}s and any other objects.<p></p>
  *
  * <p>{@link ModContainer}s are registered in the event bus by default and there events will
- * only be triggered if said container is enabled. However if you would like to register
- * and external object to receive {@link SubscribeEvent}s you can do so by calling
- * the {@link #register(Object)} method with an instance of the class as parameter</p><p></p>
+ * only be triggered if said container is enabled. However if you would like to register and external object to
+ * receive {@link SubscribeEvent}s you can do so by calling the {@link #register(Object)} method with an instance of
+ * the class as parameter</p><p></p>
  *
  * <p>Similar to the {@link CommandBus} the opposite can be done to remove an object from
- * invoking event methods by calling an instance of the {@link #unRegister(Object)} method. with
- * any object as parameter</p>
+ * invoking event methods by calling an instance of the {@link #unRegister(Object)} method. with any object as
+ * parameter</p>
  *
  * @author Icovid | Icovid#3888
  * @since 1.2.0-BETA
@@ -52,13 +51,12 @@ public class EventBus {
     private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> listeners = new HashMap<>();
 
     /**
-     * Register mod container instance to receive {@link Event}s using
-     * the {@link SubscribeEvent} annotation.
+     * Register mod container instance to receive {@link Event}s using the {@link SubscribeEvent} annotation.
      *
      * <p>{@link ModContainer}s are handled differently than normal object
      * to provide support for module priority in future addon gui.</p>
      *
-     * @param modContainer container to be registered in the EventBus
+     * @param modContainer the container to be registered in the EventBus
      */
     @SuppressWarnings("unchecked")
     public void register(ModContainer modContainer) {
@@ -73,9 +71,13 @@ public class EventBus {
                     if (!modContainer.getEvents().containsKey(event))
                         modContainer.getEvents().put(event, new CopyOnWriteArrayList<>());
                     // Add event to container hash
-                    modContainer.getEvents().get(event).add(new EventContainer(modContainer.getInstance(), method, method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
+                    modContainer.getEvents().get(event).add(
+                            new EventContainer(modContainer.getInstance(), method,
+                                               method.getAnnotation(SubscribeEvent.class).priority(),
+                                               method.getAnnotation(SubscribeEvent.class).cancelable()));
                     // Log the event
-                    Apollo.log("[" + modContainer.getName() + "] [EVENT] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
+                    Apollo.log("[" + modContainer.getName() + "] " +
+                                       "[EVENT] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
                     // Sort container hash by priority
                     modContainer.getEvents().get(event).sort(Comparator.comparingInt(listener -> listener.getPriority().id));
                 } else {
@@ -93,16 +95,15 @@ public class EventBus {
      * <p>{@link ModContainer}s are handled differently than normal object
      * to provide support for module priority in future addon gui.</p>
      *
-     * @param modContainer container to be unregistered from the EventBus
+     * @param modContainer the container to be unregistered from the EventBus
      */
     public void unRegister(ModContainer modContainer) { modContainer.getEvents().clear(); }
 
     /**
-     * Registers an object to the {@link EventBus}. All methods annotated with the {@link
-     * SubscribeEvent} annotation will be cached into a new {@link HandlerEventContainer} and
-     * called when that Event is posted.
+     * Registers an object to the {@link EventBus}. All methods annotated with the {@link SubscribeEvent} annotation
+     * will be cached into a new {@link HandlerEventContainer} and called when that Event is posted.
      *
-     * @param any object you want to register
+     * @param any the object to be registered
      */
     @SuppressWarnings("unchecked")
     public void register(Object any) {
@@ -117,14 +118,16 @@ public class EventBus {
                     if (!listeners.containsKey(event))
                         listeners.put(event, new CopyOnWriteArrayList<>());
                     // Add event to listener hash
-                    listeners.get(event).add(new EventContainer(any, method, method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
+                    listeners.get(event).add(new EventContainer(any, method,
+                                                                method.getAnnotation(SubscribeEvent.class).priority(), method.getAnnotation(SubscribeEvent.class).cancelable()));
                     // Log the event
-                    Apollo.log("[" + any.getClass().getSimpleName() + "] [EVENT] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
+                    Apollo.log("[" + any.getClass().getSimpleName() + "] " +
+                                       "[EVENT] Registered method " + method.getName().toUpperCase() + " with " + method.getParameterTypes()[0].getCanonicalName() + " event.");
                     // Sort container hash by priority
                     listeners.get(event).sort(Comparator.comparingInt(listener -> listener.getPriority().id));
                 } else {
                     // Log invalid parameter and ignore method
-                    Apollo.error("[" + any.getClass().getSimpleName()+ "] [EVENT] Event method " + method.getName().toUpperCase() + " has invalid parameters!");
+                    Apollo.error("[" + any.getClass().getSimpleName() + "] [EVENT] Event method " + method.getName().toUpperCase() + " has invalid parameters!");
                 }
 
             }
@@ -132,18 +135,18 @@ public class EventBus {
     }
 
     /**
-     * Unregisters an object from the {@link EventBus} and removes any of its
-     * event methods from the {@link #listeners} hash.
+     * Unregisters an object from the {@link EventBus} and removes any of its event methods from the
+     * {@link #listeners} hash.
      *
-     * @param any object to be unregistered from the EventBus
+     * @param any the object to be unregistered
      */
     public void unRegister(Object any) { listeners.values().forEach(it -> it.removeIf(listener -> listener.instance == any)); }
 
     /**
-     * Posts an event to the {@link EventBus}. This calls every method that is
-     * listening for the event in question using {@link SubscribeEvent}.
+     * Posts an event to the {@link EventBus}. This calls every method that is listening for the event in question
+     * using {@link SubscribeEvent}.
      *
-     * @param event event to post
+     * @param event the event to post
      */
     public void post(Event event) {
         boolean cancelable = event instanceof EventCancelable;
