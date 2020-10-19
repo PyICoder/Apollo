@@ -9,7 +9,6 @@ Apollo is a Hypixel oriented pvp client for 1.8.9 that uses the [Sponge Mixin AP
 If you create any forum post for the client put the link below so we can keep track of our social presence.
 
 - https://hypixel.net/threads/apollo-client-discord-new-hypixel-client.3219735/#post-22502168
-- https://hypixel.net/threads/apollo-client-sdk-update-for-apollo-client-development.3292568/#post-23178676
 - https://hypixel.net/threads/apollo-client-what-is-apollo-client-unique-1-8-9-pvp-client-for-hypixel-more.3304557/
 
 # Development Setup
