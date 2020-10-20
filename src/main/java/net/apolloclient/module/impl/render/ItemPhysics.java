@@ -19,14 +19,9 @@ package net.apolloclient.module.impl.render;
 
 import net.apolloclient.module.bus.Instance;
 import net.apolloclient.module.bus.Module;
-import net.minecraft.client.renderer.entity.RenderEntityItem;
-import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Cool item animations.
- *
- * <p>Make falling items and items on ground look
- * more realistic</p>
+ * Makes falling items and items on ground look more realistic
  *
  * @see net.apolloclient.mixins.renderer.MixinRenderEntityItem
  * @author Icovid | Icovid#3888
@@ -41,8 +36,5 @@ public class ItemPhysics {
 
     @Instance public static final ItemPhysics instance = new ItemPhysics();
 
-    // TODO: Setting System impl.
     public float speed = 12;
-
-
 }

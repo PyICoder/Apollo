@@ -39,9 +39,7 @@ import java.util.Date;
  * Main class used to hold all aspects of the client and startup
  * any managers and containers listed below.
  *
- * <ul>
  * <li> {@link ModuleFactory} : constructs modules and register EventHandlers. </li>
- * </ul>
  *
  * @author Icovid | Icovid#3888
  * @since b0.2

@@ -161,8 +161,7 @@ public class MixinMinecraft {
      * @see Minecraft#launchIntegratedServer(String, String, WorldSettings) target
      */
     @Inject(method = "launchIntegratedServer", at = @At("HEAD"))
-    private void joinSinglePlayer(String folderName, String worldName, WorldSettings worldSettingsIn,
-                                  CallbackInfo callbackInfo) {
+    private void joinSinglePlayer(String folderName, String worldName, WorldSettings worldSettingsIn, CallbackInfo callbackInfo) {
         new SinglePlayerJoinEvent(folderName, worldName, worldSettingsIn).post();
     }
 
