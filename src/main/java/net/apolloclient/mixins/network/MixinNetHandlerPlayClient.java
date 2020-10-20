@@ -28,24 +28,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target injections for MixinNetHandlerPlayClient.class.
+ * {@link Mixin} target injections for events derived from {@link NetHandlerPlayClient}.class
  *
  * @author Nora Cos | Nora#0001
- * @since 1.0.0
+ * @see NetHandlerPlayClient target
+ * @since 1.2.0-BETA
  */
 @Mixin(NetHandlerPlayClient.class)
 public class MixinNetHandlerPlayClient {
 
-  /**
-   * Post {@link ActionBarEvent} or {@link ChatReceivedEvent} at chat packet.
-   *
-   * @param callbackInfo unused
-   * @param packetIn chat packet received
-   */
-  @Inject(method = "handleChat", at = @At(value = "HEAD"), cancellable = false)
-  private void onChatPacket(S02PacketChat packetIn, CallbackInfo callbackInfo) {
-    if (packetIn.getType() == 2)
-      Apollo.EVENT_BUS.post(new ActionBarEvent(packetIn.getChatComponent()));
-    else Apollo.EVENT_BUS.post(new ChatReceivedEvent(packetIn.getChatComponent()));
-  }
+    /**
+     * Post {@link ActionBarEvent} or {@link ChatReceivedEvent} at chat packet.
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     * @param packetIn     chat packet received by server
+     *
+     * @see NetHandlerPlayClient#handleChat(S02PacketChat) target
+     */
+    @Inject(method = "handleChat", at = @At(value = "HEAD"), cancellable = false)
+    private void onChatPacket(S02PacketChat packetIn, CallbackInfo callbackInfo) {
+        if (packetIn.getType() == 2) Apollo.EVENT_BUS.post(new ActionBarEvent(packetIn.getChatComponent()));
+        else Apollo.EVENT_BUS.post(new ChatReceivedEvent(packetIn.getChatComponent()));
+    }
 }

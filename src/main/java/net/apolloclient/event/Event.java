@@ -64,7 +64,5 @@ public class Event {
     /**
      * Posts the event to the EventBus.
      */
-    public void post() {
-        Apollo.EVENT_BUS.post(this);
-    }
+    public void post() { Apollo.EVENT_BUS.post(this); }
 }

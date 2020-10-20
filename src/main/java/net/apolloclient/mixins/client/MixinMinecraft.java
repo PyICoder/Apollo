@@ -38,120 +38,157 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target injections for Minecraft.class.
+ * {@link Mixin} target injections for events derived from {@link Minecraft}.class
+ * and {@link Apollo} startup methods
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @see Minecraft target
+ * @since 1.2.0-BETA
  */
 @Mixin(Minecraft.class)
 public class MixinMinecraft {
 
-  /**
-   * Edits the Title bar
-   *
-   * @param callbackInfo is unused
-   */
-  @Inject(method = "createDisplay", at = @At("RETURN"))
-  public void createDisplay(CallbackInfo callbackInfo) {
-    Display.setTitle(Apollo.NAME + " " + Apollo.VERSION);
-  }
+    /**
+     * Changes display window title to {@link Apollo#NAME} with {@link Apollo#VERSION}
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#createDisplay() target
+     */
+    @Inject(method = "createDisplay", at = @At("RETURN"))
+    public void createDisplay(CallbackInfo callbackInfo) {
+        Display.setTitle(Apollo.NAME + " " + Apollo.VERSION);
+    }
 
-  /**
-   * Post {@link Apollo} start.
-   *
-   * @param callbackInfo unused
-   */
-  @Inject(method = "startGame", at = @At("RETURN"))
-  private void onGameStart(CallbackInfo callbackInfo) {
-    Apollo.INSTANCE.postInitialization();
-  }
+    /**
+     * Initiates {@link Apollo#initialization()} when game is started
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#startGame() target
+     */
+    @Inject(method = "startGame", at = @At("HEAD"))
+    private void onGameStart(CallbackInfo callbackInfo) {
+        Apollo.INSTANCE.initialization();
+    }
 
-  /**
-   * Post {@link Apollo} shutdown.
-   *
-   * @param callbackInfo unused
-   */
-  @Inject(method = "shutdown", at = @At("HEAD"))
-  private void shutdown(CallbackInfo callbackInfo) {
-    Apollo.INSTANCE.stopClient();
-  }
+    /**
+     * Invokes {@link Apollo#postInitialization()} at the return statement of game start
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#startGame() target
+     */
+    @Inject(method = "startGame", at = @At("RETURN"))
+    private void onGameStartPost(CallbackInfo callbackInfo) {
+        Apollo.INSTANCE.postInitialization();
+    }
 
-  /**
-   * Post {@link GameLoopEvent} every tick.
-   *
-   * @param callbackInfo unused
-   * @author Nora Cos | #Nora#0001
-   */
-  @Inject(method = "runGameLoop", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;skipRenderWorld:Z", shift = At.Shift.AFTER))
-  private void runGameLoop(CallbackInfo callbackInfo) {
-    new GameLoopEvent().post();
-  }
+    /**
+     * Invokes {@link Apollo#stopClient()} when game is shut down
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#shutdown() target
+     */
+    @Inject(method = "shutdown", at = @At("HEAD"))
+    private void shutdown(CallbackInfo callbackInfo) {
+        Apollo.INSTANCE.stopClient();
+    }
 
-  /**
-   * Post {@link KeyPressedEvent} or {@link KeyReleasedEvent} at key press.
-   *
-   * @param callbackInfo unused
-   */
-  @Inject(method = "dispatchKeypresses", at = @At(value = "INVOKE_ASSIGN", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", remap = false))
-  private void runTickKeyboard(CallbackInfo callbackInfo) {
-    Apollo.EVENT_BUS.post(
-        Keyboard.getEventKeyState()
-            ? new KeyPressedEvent(Keyboard.isRepeatEvent(), Keyboard.getEventKey())
-            : new KeyReleasedEvent(Keyboard.isRepeatEvent(), Keyboard.getEventKey()));
-  }
+    /**
+     * Post a new {@link GameLoopEvent} every game tick
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @author Nora Cos | #Nora#0001
+     * @see Minecraft#runGameLoop() target
+     */
+    @Inject(method = "runGameLoop", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;" +
+            "skipRenderWorld:Z", shift = At.Shift.AFTER))
+    private void runGameLoop(CallbackInfo callbackInfo) {
+        new GameLoopEvent().post();
+    }
 
-  /**
-   * Post {@link LeftClickEvent} at left mouse click.
-   *
-   * @param callbackInfo unused
-   */
-  @Inject(method = "clickMouse", at = @At("RETURN"))
-  private void leftClickMouse(CallbackInfo callbackInfo) {
-    new LeftClickEvent().post();
-  }
+    /**
+     * Post a new {@link KeyPressedEvent} or {@link KeyReleasedEvent} on
+     * each key dispatch
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#dispatchKeypresses() target
+     */
+    @Inject(method = "dispatchKeypresses", at = @At(value = "HEAD"))
+    private void runTickKeyboard(CallbackInfo callbackInfo) {
+        Apollo.EVENT_BUS.post(
+                Keyboard.getEventKeyState()
+                        ? new KeyPressedEvent(Keyboard.isRepeatEvent(), Keyboard.getEventKey())
+                        : new KeyReleasedEvent(Keyboard.isRepeatEvent(), Keyboard.getEventKey()));
+    }
 
-  /**
-   * Post {@link RightClickEvent} at right mouse click.
-   *
-   * @param callbackInfo unused
-   */
-  @Inject(method = "rightClickMouse", at = @At("RETURN"))
-  private void rightClickMouse(CallbackInfo callbackInfo) {
-    new RightClickEvent().post();
-  }
+    /**
+     * Post a new {@link LeftClickEvent} each time left mouse button
+     * is pressed
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#clickMouse() target
+     */
+    @Inject(method = "clickMouse", at = @At("RETURN"))
+    private void leftClickMouse(CallbackInfo callbackInfo) { new LeftClickEvent().post(); }
 
-  /**
-   * Post {@link SinglePlayerJoinEvent} when joining single player world.
-   *
-   * @param folderName name of folder world file is located in.
-   * @param worldName name of world
-   * @param worldSettingsIn settings of world
-   * @param callbackInfo unused
-   */
-  @Inject(method = "launchIntegratedServer", at = @At("HEAD"))
-  private void joinSinglePlayer(String folderName, String worldName, WorldSettings worldSettingsIn, CallbackInfo callbackInfo) {
-    new SinglePlayerJoinEvent(folderName, worldName, worldSettingsIn).post();
-  }
+    /**
+     * Post a new {@link RightClickEvent} each time right mouse button
+     * is pressed
+     *
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#rightClickMouse() target
+     */
+    @Inject(method = "rightClickMouse", at = @At("RETURN"))
+    private void rightClickMouse(CallbackInfo callbackInfo) {
+        new RightClickEvent().post();
+    }
 
-  /**
-   * Post {@link LoadWorldEvent} when new world is loaded for player.
-   *
-   * @param worldClient world client used.
-   * @param callbackInfo unused
-   */
-  @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;)V", at = @At("HEAD"))
-  private void loadWorld(WorldClient worldClient, CallbackInfo callbackInfo) {
-    new LoadWorldEvent(worldClient).post();
-  }
+    /**
+     * Post a new {@link SinglePlayerJoinEvent} when joining single player world.
+     *
+     * @param folderName      the name of folder world file is located in.
+     * @param worldName       the name of the world
+     * @param worldSettingsIn the settings of the world
+     * @param callbackInfo    unused variable to cancel remaining method
+     *
+     * @see Minecraft#launchIntegratedServer(String, String, WorldSettings) target
+     */
+    @Inject(method = "launchIntegratedServer", at = @At("HEAD"))
+    private void joinSinglePlayer(String folderName, String worldName, WorldSettings worldSettingsIn,
+                                  CallbackInfo callbackInfo) {
+        new SinglePlayerJoinEvent(folderName, worldName, worldSettingsIn).post();
+    }
 
-  /**
-   * Post {@link GuiSwitchEvent} when a GUI is opened.
-   *
-   * @param guiScreenIn gui opened.
-   * @param callbackInfo unused
-   */
-  @Inject(method = "displayGuiScreen", at = @At("HEAD"))
-  private void displayGuiScreen(GuiScreen guiScreenIn, CallbackInfo callbackInfo) {
-    new GuiSwitchEvent(guiScreenIn).post();
-  }
+    /**
+     * Post {@link LoadWorldEvent} when new world is loaded for player.
+     *
+     * @param worldClient  the world client on new world.
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#loadWorld(WorldClient)  target
+     */
+    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;)V", at = @At("HEAD"))
+    private void loadWorld(WorldClient worldClient, CallbackInfo callbackInfo) {
+        new LoadWorldEvent(worldClient).post();
+    }
+
+    /**
+     * Post {@link GuiSwitchEvent} when current {@link GuiScreen} is changed.
+     *
+     * @param guiScreenIn  new {@link GuiScreen} displayed
+     * @param callbackInfo unused variable to cancel remaining method
+     *
+     * @see Minecraft#displayGuiScreen(GuiScreen) target
+     */
+    @Inject(method = "displayGuiScreen", at = @At("HEAD"))
+    private void displayGuiScreen(GuiScreen guiScreenIn, CallbackInfo callbackInfo) {
+        new GuiSwitchEvent(guiScreenIn).post();
+    }
 }

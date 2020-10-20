@@ -58,21 +58,20 @@ public class Apollo {
     public static final CommandBus COMMAND_BUS = new CommandBus();
     public static final ModuleFactory MODULE_FACTORY = new ModuleFactory("net.apolloclient.module.impl", null);
 
-    public Apollo() {
-    }
-
     /**
      * Called on Minecraft startup.
      */
-    public void postInitialization() {
-        for (ModContainer container : MODULE_FACTORY.modules)
-            container.post(new PostInitializationEvent(container));
-
+    public void initialization() {
         EVENT_BUS.register(COMMAND_BUS);
         EVENT_BUS.register(this);
 
         try { ApolloFontRenderer.loadEmojis();
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public void postInitialization() {
+        for (ModContainer container : MODULE_FACTORY.modules)
+            container.post(new PostInitializationEvent(container));
     }
 
     /**

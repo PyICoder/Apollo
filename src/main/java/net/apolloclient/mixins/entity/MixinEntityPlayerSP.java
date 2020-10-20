@@ -18,6 +18,7 @@
 package net.apolloclient.mixins.entity;
 
 import net.apolloclient.event.impl.player.PlayerChatEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.play.client.C01PacketChatMessage;
@@ -27,31 +28,32 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
- * Event target injections for EntityPlayerSP.class.
+ * {@link Mixin} target injections for events derived from {@link EntityPlayerSP}.class
  *
  * @author Nora Cos | Nora#0001
- * @since b02
+ * @see EntityPlayerSP target
+ * @since 1.2.0-BETA
  */
 @Mixin(EntityPlayerSP.class)
 public class MixinEntityPlayerSP {
 
-  @Shadow @Final public NetHandlerPlayClient sendQueue;
+    /** {@link NetHandlerPlayClient} que to send messages to server */
+    @Shadow @Final public NetHandlerPlayClient sendQueue;
 
-  /**
-   * Posts a {@link PlayerChatEvent}. If the event is canceled, prevent the client from sending any
-   * message.
-   *
-   * @param message message player sent
-   * @author Nora Cos | Nora#0001
-   */
-  @Overwrite
-  public void sendChatMessage(String message) {
-    if (message != null) {
-      PlayerChatEvent event = new PlayerChatEvent(message);
-      event.post();
-      if (!event.isCanceled()) {
-        this.sendQueue.addToSendQueue(new C01PacketChatMessage(event.message));
-      }
+    /**
+     * Posts a new {@link PlayerChatEvent} when {@link Minecraft#thePlayer} attempts to send
+     * a chat message
+     *
+     * @param message message player sent
+     *
+     * @author Nora Cos | Nora#0001
+     * @see EntityPlayerSP#sendChatMessage(String) target
+     */
+    @Overwrite
+    public void sendChatMessage(String message) {
+        if (message == null) return;
+        PlayerChatEvent event = new PlayerChatEvent(message);
+        event.post();
+        if (!event.isCanceled()) this.sendQueue.addToSendQueue(new C01PacketChatMessage(event.message));
     }
-  }
 }

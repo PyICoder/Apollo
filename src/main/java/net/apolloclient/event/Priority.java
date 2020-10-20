@@ -17,12 +17,16 @@
 
 package net.apolloclient.event;
 
-import net.apolloclient.event.bus.*;
-import net.apolloclient.command.*;
-import net.apolloclient.module.bus.*;
-import java.util.concurrent.*;
+import net.apolloclient.command.Command;
+import net.apolloclient.command.CommandBus;
+import net.apolloclient.event.bus.EventBus;
+import net.apolloclient.event.bus.SubscribeEvent;
+import net.apolloclient.module.bus.EventHandler;
+import net.apolloclient.module.bus.Module;
+import net.apolloclient.module.bus.ModuleFactory;
 
 import java.util.Comparator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Public enum for storing {@link SubscribeEvent}, {@link EventHandler} and {@link Command} priority

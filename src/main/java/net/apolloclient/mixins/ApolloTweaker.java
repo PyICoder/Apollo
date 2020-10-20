@@ -27,10 +27,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/* Tweaker Used to Start Mixin Bootstrap - called in Launch Arguments */
+/**
+ * Implementation of {@link ITweaker} used to add the {@code mixins.apollo.json} configuration to the default {@link
+ * MixinEnvironment} so apollo is injected into the {@link LaunchClassLoader}.<p></p>
+ *
+ * <p>Also handles {@link ITweaker#getLaunchArguments()} by inputting default values if value
+ * does not equal {@code null} and will inject optifine in future in future versions.</p>
+ *
+ * @author Nora Cos | Nora#0001
+ * @see ITweaker tweaker interface
+ * @since 1.2.0-BETA
+ */
 public class ApolloTweaker implements ITweaker {
 
-    // List of Launch Arguments for getLaunchArguments[]
     private final List<String> launchArguments = new ArrayList<>();
 
     @Override

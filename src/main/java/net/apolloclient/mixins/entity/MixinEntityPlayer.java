@@ -18,6 +18,7 @@
 package net.apolloclient.mixins.entity;
 
 import net.apolloclient.event.impl.player.AttackEntityEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,24 +27,25 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target injections for EntityPlayer.class.
+ * {@link Mixin} target injections for events derived from {@link EntityPlayer}.class
  *
- * @author MatthewTGM | MatthewTGM#4058
- * @since b0.2
+ * @author Icovid | Icovid#3888
+ * @see EntityPlayer target
+ * @since 1.2.0-BETA
  */
 @Mixin(EntityPlayer.class)
 public class MixinEntityPlayer {
 
-  /**
-   * posts a {@link AttackEntityEvent} when entity hits another entity.
-   *
-   * @param targetEntity entity hit
-   * @param callbackInfo unused
-   */
-  @Inject(method = "attackTargetEntityWithCurrentItem", at = @At("RETURN"))
-  public void attackTargetEntityWithCurrentItem(Entity targetEntity, CallbackInfo callbackInfo) {
-    if (targetEntity != null) {
-      new AttackEntityEvent(targetEntity).post();
+    /**
+     * posts a new {@link AttackEntityEvent} when {@link Minecraft#thePlayer} hits another entity.
+     *
+     * @param callbackInfo variable to cancel remaining method
+     * @param targetEntity entity hit by the player
+     *
+     * @see EntityPlayer#attackTargetEntityWithCurrentItem(Entity) target
+     */
+    @Inject(method = "attackTargetEntityWithCurrentItem", at = @At("RETURN"))
+    public void attackTargetEntityWithCurrentItem(Entity targetEntity, CallbackInfo callbackInfo) {
+        if (targetEntity != null) new AttackEntityEvent(targetEntity).post();
     }
-  }
 }

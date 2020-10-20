@@ -49,7 +49,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class CommandBus {
 
-    /** Chat @{@link Command} prefix used in {@link CommandBus}*/
+    /** Chat @{@link Command} prefix used in {@link CommandBus} */
     public static String PREFIX = ".";
     /** A list of all {@link CommandContainer}s currently set to be invoked in {@link CommandBus}. */
     private final CopyOnWriteArrayList<CommandContainer> commands = new CopyOnWriteArrayList<>();

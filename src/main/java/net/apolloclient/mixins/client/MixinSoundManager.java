@@ -26,24 +26,28 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Event target injections for SoundManager.class.
+ * {@link Mixin} target injections for events derived from {@link SoundManager}.class
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @see SoundManager target
+ * @since 1.2.0-BETA
  */
 @Mixin(SoundManager.class)
 public class MixinSoundManager {
 
-  /**
-   * Post {@link PlaySoundEvent} when sound is played on client.
-   *
-   * @param callbackInfo used to cancel event
-   * @param sound sound played
-   */
-  @Inject(method = "playSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/audio/SoundHandler;getSound(Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/client/audio/SoundEventAccessorComposite;"), cancellable = true)
-  private void playSound(ISound sound, CallbackInfo callbackInfo) {
-    PlaySoundEvent playSoundEvent = new PlaySoundEvent(sound);
-    playSoundEvent.post();
-    if (playSoundEvent.isCanceled()) callbackInfo.cancel();
-  }
+    /**
+     * Post a new {@link PlaySoundEvent} when sound is attempted to play on client.
+     *
+     * @param callbackInfo variable to cancel remaining method
+     * @param sound        {@link ISound} attempting to play
+     *
+     * @see SoundManager#playSound(ISound) target
+     */
+    @Inject(method = "playSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/audio/SoundHandler;getSound(Lnet/minecraft/util/ResourceLocation;)" +
+            "Lnet/minecraft/client/audio/SoundEventAccessorComposite;"), cancellable = true)
+    private void playSound(ISound sound, CallbackInfo callbackInfo) {
+        PlaySoundEvent playSoundEvent = new PlaySoundEvent(sound);
+        playSoundEvent.post();
+        if (playSoundEvent.isCanceled()) callbackInfo.cancel();
+    }
 }

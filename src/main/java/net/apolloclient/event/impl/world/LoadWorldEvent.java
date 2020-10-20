@@ -31,13 +31,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 public class LoadWorldEvent extends Event {
 
-  /** the new {@link WorldClient} loaded */
-  public final WorldClient worldClient;
+    /** the new {@link WorldClient} loaded */
+    public final WorldClient worldClient;
 
-  /**
-   * @param worldClient the new {@link WorldClient} loaded
-   */
-  public LoadWorldEvent(WorldClient worldClient) {
-    this.worldClient = worldClient;
-  }
+    /**
+     * @param worldClient the new {@link WorldClient} loaded
+     */
+    public LoadWorldEvent(WorldClient worldClient) {
+        this.worldClient = worldClient;
+    }
 }
