@@ -25,9 +25,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Implementation of {@link Event} posted when {@link Minecraft#thePlayer()} attacks another entity
  *
- * @author MatthewTGM | MatthewTGM#4058
- * @see net.apolloclient.mixins.entity.MixinEntityPlayer#attackTargetEntityWithCurrentItem(Entity, CallbackInfo)
- * injection
+ * @author Icovid | Icovid#3888
+ * @see net.apolloclient.mixins.entity.MixinEntityPlayer#attackTargetEntityWithCurrentItem(Entity, CallbackInfo) injection
  * @since 1.2.0-BETA
  */
 public class AttackEntityEvent extends Event {

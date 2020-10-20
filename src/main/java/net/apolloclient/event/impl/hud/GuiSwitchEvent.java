@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Implementation of {@link Event} posted when {@link Minecraft#displayGuiScreen(GuiScreen)} is called and current
  * gui screen is switched.
  *
- * @author MatthewTGM | MatthewTGM#4058
+ * @author Icovid | Icovid#3888
  * @see net.apolloclient.mixins.client.MixinMinecraft#displayGuiScreen(GuiScreen, CallbackInfo) injection
  * @since 1.2.0-BETA
  */
