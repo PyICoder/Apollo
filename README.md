@@ -1,4 +1,4 @@
-[![Discord](https://img.shields.io/discord/740991579342503936?color=informational&label=%20&logo=discord&logoColor=white&style=for-the-badge) ](https://discord.gg/QWAunms)
+[![Discord](https://img.shields.io/discord/740991579342503936?color=informational&label=%20&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mAx8Phh)
 
 # Apollo
 
