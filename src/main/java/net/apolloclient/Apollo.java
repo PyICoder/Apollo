@@ -22,11 +22,10 @@ import net.apolloclient.command.CommandBus;
 import net.apolloclient.event.bus.EventBus;
 import net.apolloclient.event.bus.SubscribeEvent;
 import net.apolloclient.event.impl.client.input.KeyPressedEvent;
-import net.apolloclient.gui.guitest;
+import net.apolloclient.gui.ModulesGUI;
 import net.apolloclient.module.bus.ModContainer;
 import net.apolloclient.module.bus.ModuleFactory;
 import net.apolloclient.module.bus.event.PostInitializationEvent;
-import net.apolloclient.utils.font.ApolloFont;
 import net.apolloclient.utils.font.ApolloFontRenderer;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -101,7 +100,7 @@ public class Apollo {
     @SubscribeEvent
     public void test(KeyPressedEvent event) {
         if (event.keyCode == Keyboard.KEY_RSHIFT)
-            Minecraft.getMinecraft().displayGuiScreen(new guitest());
+            Minecraft.getMinecraft().displayGuiScreen(new ModulesGUI());
     }
 
 }

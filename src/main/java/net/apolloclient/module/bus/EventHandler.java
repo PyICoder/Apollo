@@ -26,19 +26,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a method to handle Minecraft startup and Module initiation Events
- * The method must have a single parameter, one of the following types.
+ * Allocates a method to handle Minecraft startup and Module initiation Events
+ * thrown by the {@link ModuleFactory}. Methods must have a single parameter of
+ * one of the following types.
  *
- * <ul>
  * <li> {@link InitializationEvent} : runs when module is constructed.</li>
  * <li> {@link PostInitializationEvent} : runs after all modules have been constructed.</li>
  * <li> {@link EnableEvent} : runs each time module is enabled.</li>
  * <li> {@link DisableEvent} : runs each time module is disabled.</li>
- * <li> TODO: {@link ShutDownEvent} : runs when game is closed. </li>
- * </ul>
+ * <li> {@link ShutDownEvent} : runs when game is closed. </li>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @see net.apolloclient.event.bus.HandlerEventContainer conatiner for this annoation
+ * @since 1.2.0-BETA
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

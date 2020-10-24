@@ -83,7 +83,7 @@ public class ApolloFontRenderer {
     // Cache of strings widths and heights to improve performance.
     public static final Map<String, ApolloFontRenderer> cached_renderers = new HashMap<>();
     // Resource location for emoji texture map
-    private static final ResourceLocation emoji_texture = new ResourceLocation("/font/default-emojis.png");
+    private static final ResourceLocation emoji_texture = new ResourceLocation("/default-emojis.png");
     // Pattern and codes to implement color codes into renderer.
     private static final Pattern COLOR_CODE_PATTERN = Pattern.compile("§[0123456789abcdefklmnor!]");
     private static final Pattern EMOJI_PATTERN = Pattern.compile(":[^ :]*:");

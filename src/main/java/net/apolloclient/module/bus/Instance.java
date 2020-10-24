@@ -23,10 +23,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Populates the annotated field with the module instance create by {@link ModuleFactory}
+ * Allocates a field to be populated with the module instance
+ * created by the {@link ModuleFactory}
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @since 1.2.0-BETA
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

@@ -24,81 +24,26 @@ import net.apolloclient.event.bus.EventContainer;
 import net.apolloclient.module.Category;
 import net.apolloclient.module.ModuleContainer;
 import net.apolloclient.module.bus.event.ModuleEvent;
+import net.apolloclient.module.DraggableModuleContainer;
 
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Container class to hold basic module information
- * to be displayed in gui and functions for module enabling / disabling
+ * Container class to hold basic module information and methods
+ * used by the {@link ModuleFactory}. Has two child classes used in the
+ * Module creation of type {@link ModuleContainer} and {@link DraggableModuleContainer}
  *
- * <p>Done this way so {@link ModuleContainer} and {@link net.apolloclient.module.DraggableModuleContainer} can
- * be handled differently within constructor.</p>
+ * <p>Done this way so {@link ModuleContainer} and {@link DraggableModuleContainer} can
+ * be handled differently within constructor and settings can be loaded correctly.</p>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @see ModuleContainer module
+ * @see DraggableModuleContainer draggable module
+ * @since 1.2.0-BETA
  */
 public interface ModContainer {
 
-    /**
-     * Name of module to displayed in gui list.
-     * <p>Used to define settings in file / must be unique to module</p>
-     */
-    String getName();
-
-    /**
-     * Description of module displayed in gui list.
-     */
-    String getDescription();
-
-    /**
-     * Category used to section modules.
-     */
-    Category getCategory();
-
-    /**
-     * Aliases are search terms people can type instead of module
-     * name to find the module, split aliases with {@code :}.
-     */
-    String[] getAliases();
-
-    /**
-     * Priority of modules events compared to other modules
-     */
-    int getPriority();
-
-    /**
-     * Author of module to be displayed in credits.
-     */
-    String getAuthor();
-
-    /**
-     * If module is currently enabled.
-     */
-    boolean isEnabled();
-
-    /**
-     * List of servers module is compatible with split by {@code :}.
-     * <p>Use this if module is dependant on certain aspects of a server such as chat formatting
-     * or scoreboard information.</p>
-     */
-    String[] getRecommendedServersIPs();
-
-    /**
-     * List of servers module is not allowed on split by {@code :}.
-     * <p>Use this if module should always be disabled to follow server guidelines.</p>
-     */
-    String[] getDisallowedServersIPs();
-
-    /**
-     * Get the actual module class object
-     */
-    Object getInstance();
-
-    /**
-     * Toggle module enabled state
-     */
-    void toggle();
 
     /**
      * Set module enabled state to certain value.
@@ -111,6 +56,67 @@ public interface ModContainer {
      * @param priority to set module too.
      */
     void setPriority(int priority);
+
+
+    /**
+     * the name of module to displayed in gui list.
+     * <p>Used to define settings in file / must be unique to module</p>
+     */
+    String getName();
+
+    /**
+     * the description of module usage
+     */
+    String getDescription();
+
+    /**
+     * the {@link Category} used to section modules.
+     */
+    Category getCategory();
+
+    /**
+     * the aliases or search terms people can type instead of module
+     * name to find the module
+     */
+    String[] getAliases();
+
+    /**
+     * the priority of modules events compared to other modules
+     */
+    int getPriority();
+
+    /**
+     * the author of module to be displayed in credits.
+     */
+    String getAuthor();
+
+    /**
+     * if module is currently enabled.
+     */
+    boolean isEnabled();
+
+    /**
+     * the list of servers module is compatible
+     * <p>Use this if module is dependant on certain aspects of a server such as chat formatting
+     * or scoreboard information.</p>
+     */
+    String[] getRecommendedServersIPs();
+
+    /**
+     * the list of servers module is not allowed on
+     * <p>Use this if module should always be disabled to follow server guidelines.</p>
+     */
+    String[] getDisallowedServersIPs();
+
+    /**
+     * @return the actual module class object
+     */
+    Object getInstance();
+
+    /**
+     * Toggle module enabled state
+     */
+    default void toggle() { this.setEnabled(!this.isEnabled()); };
 
     /**
      * Tracks all methods annotated with {@link EventHandler}
@@ -127,9 +133,12 @@ public interface ModContainer {
     HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventContainer>> getEvents();
 
     /**
-     * Post an event to module and any module requesting its events
+     * Post an event to module class and any other module requesting its events
      *
      * @param moduleEvent event to be posted.
      */
-    void post(ModuleEvent moduleEvent);
+    default void post(ModuleEvent moduleEvent) {
+        for (HandlerEventContainer handlerEventContainer : getHandlers().getOrDefault(moduleEvent.getClass(), new CopyOnWriteArrayList<>()))
+            handlerEventContainer.invoke(moduleEvent);
+    };
 }

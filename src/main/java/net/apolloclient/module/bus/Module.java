@@ -25,19 +25,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This defines a module to be displayed in gui.
+ * <p>Allocates a class to be handled by the {@link ModuleFactory}. Any class found with this annotation applied will
+ * be loaded as a module and the instance that is loaded will receive all event calls from the {@link ModuleFactory} as
+ * long as the module is enabled when the event is posted. Settings can be added to the module with annotation</p>
  *
- *  <p>Any class found with this annotation applied will be loaded as a module and the instance that is
- * loaded will receive all event calls from as {@link ModuleFactory} as long as the module is enabled when
- * the event is posted. Settings can be added to the module with annotation</p>
- *
- * <ul>
  * <li> {@link Instance } : Track instance of module created by {@link ModuleFactory}</li>
  * <li> {@link EventHandler } : Called on Module Specific functions such as {@code init} or {@code enable}</li>
- * </ul>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @since 1.2.0-BETA
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

@@ -24,24 +24,20 @@ package net.apolloclient.module;
  * and provide a usage case for each category.</p>
  *
  * @author Icovid | Icovid#3888
- * @since b0.2
+ * @since 1.2.0-BETA
  */
 public enum Category {
 
-    VISUAL("Modules that offer a visual enhancement to the game.", "https://static.apolloclient.net/"),
-    UTIL("Modules that improves minecraft or the client itself or fixes a minor inconvenience", "https://static.apolloclient.net/"),
-    PLAYER("Modules that offer playing enhancements to the player or players activities.", "https://static.apolloclient.net/"),
-    GAMEPLAY("Modules that improve gameplay on Hypixel or any other server.", "https://static.apolloclient.net/");
+    VISUAL("Modules that offer a visual enhancement to the game."),
+    UTIL("Modules that improves minecraft or the client itself or fixes a minor inconvenience"),
+    PLAYER("Modules that offer playing enhancements to the player or players activities."),
+    GAMEPLAY("Modules that improve gameplay on Hypixel or any other server.");
 
+    /** description of category usage. */
     public final String description;
-    public final String url;
 
     /**
      * @param description of category usage.
-     * @param url to category logo.
      */
-    Category(String description, String url) {
-        this.url = url;
-        this.description = description;
-    }
+    Category(String description) { this.description = description; }
 }
